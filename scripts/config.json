@@ -1,0 +1,24 @@
+{
+    "SqlUpdateUrl": "https/xyz/sql/update",
+    "SourcePath": "D:\\Users\\hsvotwa\\Desktop\\Old",
+    "DestinationPath": "D:\\Users\\hsvotwa\\Desktop\\New 2",
+    "Includes": [
+        "base",
+        "classes",
+        "controllers",
+        "css",
+        "images",
+        "js",
+        "model_mgrs",
+        "models",
+        "scripts",
+        "uploads",
+        "views",
+        "uploads",
+        "views",
+        "webroot"
+    ],
+    "Preserved": [
+        "uploads"
+    ]
+}
