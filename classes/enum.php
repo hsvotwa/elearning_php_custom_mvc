@@ -19,6 +19,14 @@
         const yes = 1;
     }
 
+    final class EnumUserRoleType {
+        const none = 0;
+        const guest = 1;
+        const student = 2;
+        const admin = 3;
+        const authenticated_user = 4;
+    }
+
     final class EnumSqlQryType {
         const none = 0;
         const insert = 1;
@@ -36,6 +44,9 @@
         const tbl_student = "tbl_student";
         const tbl_user = "tbl_user";
         const tbl_subject = "tbl_subject";
+        const tbl_lu_nav = "tbl_lu_nav";
+        const tbl_lu_user_type = "tbl_lu_user_type";
+        const tbl_study_aid = "tbl_study_aid";
     }
 
     final class EnumMySqlColType {
