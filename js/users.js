@@ -56,10 +56,10 @@ function linkUsers() {
     }
 }
 
-function removeUser(user_uid) {
+function removeUser(user_uuid) {
     confirmDialog("remove_user", "Confirm", "Are you sure you want to revoke this user's access?", function() {
         var data = {
-            user_uid: user_uid
+            user_uuid: user_uuid
         };
         httpHandler("/" + getBaseUrl() + "profile/removeuser", "post", data, refresh);
     });

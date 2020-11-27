@@ -26,7 +26,7 @@ class FieldMdl {
     public function __construct ( $html_name, $mysql_name, $description, $valid,
                                 $target_data_type, $target_field_type, $mysql_tbl, $compulsory, $css_class,
                                 $value_object, $mysql_ref_tbl = null, $decimal_place_count = 2,  
-                                $list_source = null, $list_default = '-- please select --', $min_length = 0, $audit_value = true ) {
+                                $list_source = null, $list_default = '-- please select --', $min_length = 0 ) {
         $this->g_html_name = $html_name;
         $this->g_mysql_name = $mysql_name;
         $this->g_description = $description;
@@ -42,7 +42,6 @@ class FieldMdl {
         $this->g_list_default = $list_default;
         $this->g_value_object = $value_object;
         $this->g_min_length = $min_length;
-        $this->g_audit_value = $audit_value;
     }
 
     public function getGen() {
@@ -65,17 +64,10 @@ class FieldMdl {
             return "";
         }
         switch( $this->g_mysql_ref_tbl ) {
-            case EnumSqlTbl::tbl_lu_role_access_type:
-            case EnumSqlTbl::tbl_lu_document_type:
-            case EnumSqlTbl::tbl_lu_yes_no:
             case EnumSqlTbl::tbl_lu_role_type:
-            case EnumSqlTbl::tbl_lu_numbering_type:
-            case EnumSqlTbl::tbl_lu_nav:
-            case EnumSqlTbl::tbl_lu_nav_role_access:
-            case EnumSqlTbl::tbl_audit_trail:
                 return "enum_id";
             case EnumSqlTbl::tbl_user:
-                return "user_uuid";
+                return "uuid";
         } 
         return "uuid";
     }
@@ -85,18 +77,11 @@ class FieldMdl {
             return "";
         }
         switch( $table_name ) {
-            case EnumSqlTbl::tbl_lu_role_access_type:
-            case EnumSqlTbl::tbl_lu_document_type:
-            case EnumSqlTbl::tbl_lu_yes_no:
             case EnumSqlTbl::tbl_lu_role_type:
-            case EnumSqlTbl::tbl_lu_numbering_type:
-            case EnumSqlTbl::tbl_lu_nav:
-            case EnumSqlTbl::tbl_lu_nav_role_access:
                 return "name";
-            case EnumSqlTbl::tbl_student:
             case EnumSqlTbl::tbl_user:
-                return "concat(surname, ' ', name)";
-        } 
+                return "name";
+        }
         return "name";
     }
 

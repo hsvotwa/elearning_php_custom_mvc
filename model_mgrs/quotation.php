@@ -11,7 +11,7 @@ class ProfileMgr extends BaseMgr {
                 inner join tbl_user_profile_access upa on upa.profile_uuid = p.uuid
                 where ( p.name like '%$search_text%' or p.tel_no like '%$search_text%' )
                 and upa.soft_del = " . EnumYesNo::no . "
-                and upa.user_uid = '" . UserSessionMdl::getUuid() . "' ";
+                and upa.user_uuid = '" . UserSessionMdl::getUuid() . "' ";
         if( $invite_list ) {
             $query .= " and ifnull( upa.confirmation_code, '') != '' ";
         } else {

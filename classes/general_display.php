@@ -55,7 +55,7 @@ class GeneralDisplay {
     }
 
     public function getJavascriptRef ( $path ) {
-        return '<script language="JavaScript" type="text/javascript" src="' . Common::getExistRefPath( $path, true ) . '"></script>';
+        return '<script language="JavaScript" type="text/javascript" src="' . Common::getExistRefPath ( $path, true ) . '"></script>';
     }
 
     public function getNavigation() {
@@ -79,7 +79,7 @@ class GeneralDisplay {
         return "<label class=\"form_label\">$description$indicator</label>";
     }
 
-    public function getHtmlDisplay($object, $field_name, $ref_table, $ref_column) {
+    public function getHtmlDisplay( $object, $field_name, $ref_table, $ref_column) {
         $value = $object && isset( $object[ $field_name ] ) ? $object[ $field_name ] : ""; 
         if( $ref_table ) {
             $this->resolveValue( $value, $ref_table, $ref_column );

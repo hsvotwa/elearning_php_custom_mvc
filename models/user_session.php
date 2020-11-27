@@ -4,7 +4,7 @@ class UserSessionMdl {
 		if ( session_status() == PHP_SESSION_NONE ) {
 			session_start();
 		}
-		return ( isset ( $_SESSION['user_uid'] ) ? $_SESSION['user_uid'] : null ) ;
+		return ( isset ( $_SESSION['user_uuid'] ) ? $_SESSION['user_uuid'] : null ) ;
 	}
 
 	public static function getName() {
@@ -49,7 +49,7 @@ class UserSessionMdl {
 		if ( is_null ( $user_data ) || ! is_array( $user_data ) ) {
 			return false;
 		}
-		// $_SESSION['user_uid'] = $user_data['user_uid'];
+		// $_SESSION['user_uuid'] = $user_data['user_uuid'];
 		// $_SESSION['user_name'] =  $user_data['user_name'];
 		// $_SESSION['user_surname'] = $user_data['user_surname'];
 		// $_SESSION['user_type_id'] = $user_data['user_type_id'];

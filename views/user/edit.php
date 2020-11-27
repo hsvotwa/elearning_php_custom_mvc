@@ -32,6 +32,12 @@
                             </td>
                         </tr>
                     </table>
+                    <tr>
+                        <td class="w-50">
+                           <input type="submit" value="Submit" />
+                        </td>
+                    </tr>
+                </table>
                 </div>
                 </div>
             </td>

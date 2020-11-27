@@ -1,21 +1,33 @@
-<div class="div_center">
-    <form>
-        <table class="w-100">
-            <tr>
-                <td style="text-align:center">
-                    <font class="font_h1_maroon"><?php echo $page_title; ?></font>
-                </td>
-            </tr>
-            <tr>
-                <td style="text-align:center">
-                    <?php
-                        foreach ( $form_fields as $field ) {
-                            echo $field->getFieldHtml();
-                        }
-                    ?>
-                    <input formaction="<?php echo $form_action; ?>" type="submit" value="Log in with Binary City Time" class="button"/> 
-                </td>
-            </tr>
-        </table>
-    </form>
+<div style="margin: 15px 5px">
+    <input type="submit" value="Submit" class="button" />
 </div>
+<form method='post' action='<?php echo $form_action; ?>' id="frm_main">
+    <table class="tbl_cont">
+        <tr>
+            <td class="tbl_cont_td_2">
+                <div id="tab-gen">
+                    <table class="w-100">
+                        <tr>
+                            <td class="w-50">
+                                <?php
+                                echo $form_fields["email"]->getFieldHtmlLabel();
+                                echo $form_fields["email"]->getFieldHtmlDisplay();
+                                ?>
+                            </td>
+                            <td class="w-50">
+                                <?php
+                                echo $form_fields["password"]->getFieldHtmlLabel();
+                                echo $form_fields["password"]->getFieldHtmlDisplay();
+                                ?>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+    </form>
+    <?php
+    echo $gen->getJavascriptRef('js/login.js')
+    ?>

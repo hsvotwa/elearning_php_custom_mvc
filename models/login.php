@@ -10,99 +10,51 @@ class LoginMdl extends BaseMdl {
         return "Login";
     }
 
-    public function auth( $auth_code, &$redirect_to ) {
-        parse_str( parse_url( $auth_code )['query'], $query );
-        $auth_code = $query['code'];
-        if( ! $auth_code ) {
-            $redirect_to = WEBROOT . "account/login";
-            return true;
-        }
+    public function auth( $email, $password, &$redirect_to ) {
         $redirect_to = "";
-        $user_data = ( new TimeIntegration(null, OAuth2GrantType::auth_code, $auth_code ) )->authenticate();
+        $query = "select * from tbl_user where email = '$email' and password = '" . md5( $password ) . "';";
+        $records = $this->getMySql()->getQueryResult( $query );
+        if( ! $records || ! $records->num_rows ) {
+            $redirect_to = WEBROOT . "account/login";
+            return false;
+        }
+        $user_data = mysqli_fetch_array( $records );
         if( ! $user_data || !is_array( $user_data ) ) {
             $redirect_to = WEBROOT . "account/login";
             return false;
         }
-        if ( ! $this->save( $user_data ) ) {
-            $redirect_to = WEBROOT . "account/login";
-            return false;
-        }
-        $prev_selected_profile_uuid = ( new UserMdl( $user_data["user_uid"], false ) )->g_row["last_selected_prof_uuid"];
-        $profile_row = null;
-        if( $prev_selected_profile_uuid ) {
-            $profile_row = ( new ProfileMdl( $prev_selected_profile_uuid ) )->g_row;
-            if( $profile_row && ! ( new ProfileUserMdl() )->userExistsInProfile( $prev_selected_profile_uuid, $user_data["user_uid"], $existing )) {
-                $profile_row = null;
-            }
-        }
-        if( ! $profile_row ) {
-            $user_profiles = $this->getProfiles( $user_data["user_uid"] );
-            if ( $user_profiles && $user_profiles->num_rows ) {
-                $profile_row = mysqli_fetch_assoc( $user_profiles );
-            }
-        }
         UserSessionMdl::setUserSession(
             array(
-                "user_uid" => $user_data["user_uid"], 
+                "uuid" => $user_data["uuid"], 
                 "user_name" => $user_data["name"], 
                 "user_surname" => $user_data["surname"], 
-                "selected_profile_id" => $profile_row ? $profile_row["uuid"] : null, 
-                "selected_profile_name" =>  $profile_row ? $profile_row["name"] : null
+                "user_type_id" => $user_data["user_type_id"], 
+                "user_type" =>  $user_data["user_type"]
                 )
             );
-        if ( ! $profile_row ) {
-            $redirect_to = WEBROOT . "profile/forcenew";
-            return true;
-        }
         $redirect_to = WEBROOT . "home/welcome";
         return true;
     }
 
-    private function get( $user_uid ) {
-        $query = "select * from tbl_user where user_uuid = '$user_uid';";
+    private function get( $user_uuid ) {
+        $query = "select * from tbl_user where uuid = '$user_uuid';";
         $records = $this->getMySql()->getQueryResult( $query );
         return $records && $records->num_rows;
     }
 
-    public function save( $user_data ) {
-        $exists = $this->get( $user_data["user_uid"] );
+    public function save( $record_data ) {
+        $exists = $this->get( $record_data["uuid"] );
         $query = $exists ? "update tbl_user set " : "insert into tbl_user set uuid = uuid(), ";
-        $query .= " name = '" . $user_data["name"] . "',";
-        $query .= " surname = '" . $user_data["surname"] . "',";
-        $query .= " status_id = '" . $user_data["status_id"] . "',";
+        $query .= " name = '" . $record_data["name"] . "',";
+        $query .= " surname = '" . $record_data["surname"] . "',";
+        $query .= " password = '" . md5( $record_data["password"] ) . "',";
+        $query .= " status_id = '" . $record_data["status_id"] . "',";
+        $query .= " email = '" . $record_data["email"] . "',";
+        $query .= " student_uuid = '" . $record_data["student_uuid"] . "',";
         $query .= " last_modified = now() ";
         $query .= $exists ? " where " : ", created = now(), ";
-        $query .= " user_uuid =  '" . $user_data["user_uid"] . "' ";
+        $query .= " uuid =  '" . $record_data["uuid"] . "' ";
         return $this->getMySql()->getQueryResult( $query );
-    }
-
-    private function getProfiles( $user_uid ) {
-        $query = "select * 
-                    from tbl_profile 
-                    where uuid in (
-                        select 
-                        profile_uuid 
-                        from tbl_user_profile_access 
-                        where user_uid = '$user_uid' 
-                        and soft_del = " . EnumYesNo::no . "
-                        and ifnull(confirmation_code, '') = ''
-                    );";
-        return $this->getMySql()->getQueryResult( $query );
-    }
-
-    public function getPendingProfiles( $user_uid ) {
-        $query = "select * 
-                    from tbl_profile 
-                    where uuid in (
-                        select 
-                        profile_uuid 
-                        from tbl_user_profile_access 
-                        where user_uid = '$user_uid' 
-                        and soft_del = " . EnumYesNo::no . "
-                        and ifnull(confirmation_code, '') != ''
-                    );";
-        $user_profiles =  $this->getMySql()->getQueryResult( $query );
-        return $user_profiles && $user_profiles->num_rows;
     }
 
     public function getFields () {
@@ -110,8 +62,9 @@ class LoginMdl extends BaseMdl {
             return $this->g_fields;
         }
         $return = array ();
+        $other_values = null;
         $return["email"] = new FieldMdl( 
-            "email", "email", "", true, EnumFieldDataType::email, EnumFieldType::_hidden, $this->g_sql_table, true, "text", $other_values
+            "email", "email", "", true, EnumFieldDataType::_string, EnumFieldType::_email, $this->g_sql_table, true, "text", $other_values
         );
         $return["password"] = new FieldMdl( 
             "password", "password", "", true, EnumFieldDataType::_string, EnumFieldType::_hidden, $this->g_sql_table, true, "text", $other_values

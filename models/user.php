@@ -18,7 +18,7 @@ class UserMdl extends BaseMdl {
         return "select u.*, 
                     ifnull(upa.role_type_id, 0) role_type_id
                     from $this->g_sql_table u 
-                    inner join tbl_user_profile_access upa on upa.user_uid = u.user_uuid
+                    inner join tbl_user_profile_access upa on upa.user_uuid = u.user_uuid
                 where user_uuid = '$this->g_id'
                 and upa.soft_del = " . EnumYesNo::no;
     }
