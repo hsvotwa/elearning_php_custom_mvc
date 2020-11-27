@@ -23,7 +23,7 @@ class GeneralDisplay {
     public function getCss() {
         $echo = '<link rel="shortcut icon" href="' . WEBROOT . 'images/favicon.ico" type="image/x-icon" />';
         $echo .= '<link rel="icon" href="' . WEBROOT . 'images/favicon.ico" type="image/x-icon" />';
-        if(Common::isLiveServer()) {
+        if( Common::isLiveServer() ) {
             $echo .= $this->getCssRef( 'css/site.css' );
         } else {
             $echo .= $this->getCssRef( 'css/site.css' );
@@ -55,41 +55,18 @@ class GeneralDisplay {
     }
 
     public function getJavascriptRef ( $path ) {
-        return '<script language="JavaScript" type="text/javascript" src="' . Common::getExistRefPath ( $path, true ) . '"></script>';
-    }
-
-    private function chkNavAuth ( $nav_uuid ) {
-        $query = "select
-                    *
-                from " . EnumSqlTbl::tbl_lu_nav_role_access . "
-                where ( nav_uuid = '$nav_uuid' );";
-        $result = $this->getMySql()->getQryRlt ( $query );
-        if ( mysqli_num_rows ( $result ) == 0 ) {
-            return false;
-        }
-        while ( $row = mysqli_fetch_assoc ( $result ) ) {
-            if ( $row['role_id'] == EnumUserRoleType::none ) {
-                return UserSessionMdl::getUuid();
-            }
-            if( ! UserSessionMdl::getProfileId() ) {
-                return false;
-            }
-            if ( ( new UserMdl( UserSessionMdl::getUuid() ) )->hasAccessTo( $row['role_id'] ) ) {
-                return true;
-            }
-        }
-        return false;
+        return '<script language="JavaScript" type="text/javascript" src="' . Common::getExistRefPath( $path, true ) . '"></script>';
     }
 
     public function getNavigation() {
-        $query = "select * from tbl_lu_nav order by sequence";
+        $query = "select * from tbl_lu_nav order by sequence;";
         $result = $this->getMySql()->getQryRlt ( $query );
         if ( ! $result || ! mysqli_num_rows ( $result ) ) { 
             return ""; 
         }
         $nav_echo = '<div class="div_nav">';
         while ( $row = mysqli_fetch_assoc ( $result ) ) {
-            if ( $this->chkNavAuth( $row['uuid'] ) ) {
+            if ( ( new UserMdl( UserSessionMdl::getUuid() ) )->hasAccessTo( $row["user_type_id"] ) ) {
                 $nav_echo .= '<a href="' . APP_DOMAIN . $row['controller'] . '/' . $row["action"] . '">' . $row['name'] . '</a>';
             }
         }

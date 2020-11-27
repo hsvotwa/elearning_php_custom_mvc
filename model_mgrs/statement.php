@@ -35,7 +35,6 @@ class studentMgr extends BaseMgr {
                     o.*
                from tbl_student o
                where ( o.name like '%$search_text%' or surname like '%$search_text%' or id_no like '%$search_text%' )
-               and o.profile_uuid = '" . UserSessionMdl::getProfileId() . "'
                order by o.surname, o.name";
    }
 }

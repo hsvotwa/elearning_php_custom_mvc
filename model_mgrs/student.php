@@ -9,7 +9,6 @@ class studentMgr extends BaseMgr {
         return "select * 
                 from tbl_student
                 where ( name like '%$search_text%' or tel_no like '%$search_text%' )
-                and profile_uuid = '" . UserSessionMdl::getProfileId() . "'
                 order by name";
     }
 }

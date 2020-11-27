@@ -65,6 +65,7 @@ function handleAllNavigation ( $delete_existing = true ) {
   $return && $return = handleNavigation( 'Quotation', 'quotation', 'enquire', ++$sequence, EnumUserRoleType::none, $uuid );
   $return && $return = handleNavigation( 'Quotation', 'statement', 'detail', ++$sequence, EnumUserRoleType::authenticated_user, $uuid );
   $return && $return = handleNavigation ( 'Log out', 'account', 'logout', ++$sequence, EnumUserRoleType::authenticated_user, $uuid );
+  $return && $return = handleNavigation ( 'Log in', 'account', 'login', ++$sequence, EnumUserRoleType::none, $uuid );
   return $return;
 }
 

@@ -46,6 +46,7 @@
         const tbl_subject = "tbl_subject";
         const tbl_lu_nav = "tbl_lu_nav";
         const tbl_lu_user_type = "tbl_lu_user_type";
+        const tbl_lu_role_type = "tbl_lu_role_type";
         const tbl_study_aid = "tbl_study_aid";
     }
 

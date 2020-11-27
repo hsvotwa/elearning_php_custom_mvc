@@ -110,29 +110,11 @@ class LoginMdl extends BaseMdl {
             return $this->g_fields;
         }
         $return = array ();
-        $crypt_key_row = ( new ConfigMdl( EnumConfig::universal_encryption_key ) );
-        $other_values = [
-            'client_id' => ( new ConfigMdl( EnumConfig::universal_client_id ) )->g_row["value"],
-            'crypt_key' =>  $crypt_key_row ? $crypt_key_row->g_row["value"] : null,
-            'client_secret' => ( new ConfigMdl( EnumConfig::universal_client_secret ) )->g_row["value"],
-            'redirect_uri' => APP_DOMAIN . "account/loginfeedback/",
-            'response_type' => 'code',
-            'scope' => 'read',
-        ];
-        $return["client_id"] = new FieldMdl( 
-            "client_id", "client_id", "", true, EnumFieldDataType::_string, EnumFieldType::_hidden, $this->g_sql_table, true, "text", $other_values
+        $return["email"] = new FieldMdl( 
+            "email", "email", "", true, EnumFieldDataType::email, EnumFieldType::_hidden, $this->g_sql_table, true, "text", $other_values
         );
-        $return["crypt_key"] = new FieldMdl( 
-            "crypt_key", "crypt_key", "", true, EnumFieldDataType::_string, EnumFieldType::_hidden, $this->g_sql_table, true, "text", $other_values
-        );
-        $return["redirect_uri"] = new FieldMdl( 
-            "redirect_uri", "redirect_uri", "", true, EnumFieldDataType::_string, EnumFieldType::_hidden, $this->g_sql_table, true, "text", $other_values
-        );
-        $return["response_type"] = new FieldMdl( 
-            "response_type", "response_type", "", true, EnumFieldDataType::_string, EnumFieldType::_hidden, $this->g_sql_table, true, "text", $other_values
-        );
-        $return["scope"] = new FieldMdl( 
-            "scope", "scope", "", true, EnumFieldDataType::_string, EnumFieldType::_hidden, $this->g_sql_table, true, "text",  $other_values
+        $return["password"] = new FieldMdl( 
+            "password", "password", "", true, EnumFieldDataType::_string, EnumFieldType::_hidden, $this->g_sql_table, true, "text", $other_values
         );
         $this->g_fields = $return;
         return $this->g_fields;

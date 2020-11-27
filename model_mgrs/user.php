@@ -11,7 +11,6 @@ class UserMgr extends BaseMgr {
                 from tbl_user u
                 inner join tbl_user_profile_access upa on upa.user_uid = u.user_uuid
                 where ( name like '%$search_text%' or surname like '%$search_text%' )
-                and upa.profile_uuid = '" . UserSessionMdl::getProfileId() . "'
                 and upa.soft_del = " . EnumYesNo::no . "
                 order by surname";
     }

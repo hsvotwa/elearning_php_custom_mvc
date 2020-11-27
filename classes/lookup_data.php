@@ -4,8 +4,16 @@ class LookupData {
         $query = "select 
                     uuid as value, 
                     name 
-                from tbl_student 
-                where profile_uuid = '" . UserSessionMdl::getProfileId() . "'
+                from tbl_student
+                order by name";
+        return ( new MySql() )->getQryRlt( $query );
+    }
+
+    public static function getRoleTypeList() {
+        $query = "select 
+                    uuid as value, 
+                    name 
+                from tbl_lu_role_type
                 order by name";
         return ( new MySql() )->getQryRlt( $query );
     }
@@ -20,7 +28,6 @@ class LookupData {
                             from tbl_unit_student 
                             where soft_del = " . EnumYesNo::no . "
                     )
-                and profile_uuid = '" . UserSessionMdl::getProfileId() . "'
                 and ( name like '%$search_text%' or surname like '%$search_text%' )
                 group by o.uuid, concat(surname, ' ', name)
                 order by o.surname, o.name";

@@ -20,8 +20,7 @@ class UserMdl extends BaseMdl {
                     from $this->g_sql_table u 
                     inner join tbl_user_profile_access upa on upa.user_uid = u.user_uuid
                 where user_uuid = '$this->g_id'
-                and upa.soft_del = " . EnumYesNo::no . 
-                ( ! $check_profile ? "" : " and profile_uuid = '" . UserSessionMdl::getProfileId() . "'" );
+                and upa.soft_del = " . EnumYesNo::no;
     }
 
     public function getRecordPageTitle() {
@@ -39,8 +38,7 @@ class UserMdl extends BaseMdl {
                         inner join tbl_user_profile_access upa on upa.user_uid = u.user_uuid
                     where user_uuid = '$uuid'
                     and ifnull( upa.confirmation_code, '' ) = ''
-                    and upa.soft_del = " . EnumYesNo::no . "
-                    and profile_uuid = '" . UserSessionMdl::getProfileId() . "'";
+                    and upa.soft_del = " . EnumYesNo::no . "";
         $result = $this->getMySql()->getQueryResult( $query );
         if ( ! $result || ! $result->num_rows ) {
             return false;
@@ -67,33 +65,6 @@ class UserMdl extends BaseMdl {
                     last_modified = now()
                 where user_uuid = '" . $this->g_id . "';";
         return  $this->getMySql()->getQueryResult( $query );
-    }
-
-    public function updAccess( $role_type_id ) {
-        if ( ! ( new ProfileUserMdl())->userExistsInProfile( UserSessionMdl::getProfileId(), $_POST["uid"], $existing ) ) {
-            return true;
-        }
-        $query = "update tbl_user_profile_access
-                    set role_type_id = $role_type_id,
-                    last_modified = now()
-                where user_uid = '" . $this->g_id . "'
-                and profile_uuid = '" . UserSessionMdl::getProfileId() . "'
-                and soft_del = " . EnumYesNo::no;
-        if( $this->getMySql()->getQueryResult( $query ) ) {
-            $field = new FieldMdl( 
-                "profile_user", "profile_user", "Role type", true, EnumFieldDataType::_string, EnumFieldType::_string, $this->g_sql_table, true, "text", $this->g_row, EnumSqlTbl::tbl_lu_role_type, 2, null, "", 6, true
-            );
-            $field->g_old_value = $existing["role_type_id"];
-            $field->g_new_value = $role_type_id;
-            $audit_trail = new AuditTrail(
-                UserSessionMdl::getUuid(),
-                $existing["uuid"],
-                $field
-            );
-            $audit_trail->trackChange(  $field );
-            return true;
-        }
-        return false;
     }
 
     public function getFields() {

@@ -20,8 +20,7 @@ class UserMdl extends BaseMdl {
                     from $this->g_sql_table u 
                     inner join tbl_user_profile_access upa on upa.user_uid = u.user_uuid
                 where user_uuid = '$this->g_id'
-                and upa.soft_del = " . EnumYesNo::no . 
-                ( ! $check_profile ? "" : " and profile_uuid = '" . UserSessionMdl::getProfileId() . "'" );
+                and upa.soft_del = " . EnumYesNo::no;
     }
 
     public function getRecordPageTitle() {
@@ -29,34 +28,18 @@ class UserMdl extends BaseMdl {
     }
 
     public function hasAccessTo( $check_type_id ) {
+        $current_role_type_id = UserSessionMdl::getUserTypeID();
         if ( $check_type_id == EnumUserRoleType::none ) {
-            return true;
+            return $current_role_type_id != EnumUserRoleType::admin; //Admin won't see guest content
         }
-        $uuid = UserSessionMdl::getUuid();
-        $query = "select u.*, 
-                        ifnull(upa.role_type_id, 0) role_type_id
-                        from $this->g_sql_table u 
-                        inner join tbl_user_profile_access upa on upa.user_uid = u.user_uuid
-                    where user_uuid = '$uuid'
-                    and ifnull( upa.confirmation_code, '' ) = ''
-                    and upa.soft_del = " . EnumYesNo::no . "
-                    and profile_uuid = '" . UserSessionMdl::getProfileId() . "'";
-        $result = $this->getMySql()->getQueryResult( $query );
-        if ( ! $result || ! $result->num_rows ) {
-            return false;
-        }
-        $current_role_type_id = mysqli_fetch_array( $result )["role_type_id"]; 
         if ( $check_type_id == $current_role_type_id ) {
             return true;
         }
-        if ( $check_type_id == EnumUserRoleType::view ) {
-            return $current_role_type_id != EnumUserRoleType::none;
+        if ( $check_type_id == EnumUserRoleType::student ) {
+            return in_array( $current_role_type_id, array( EnumUserRoleType::student, EnumUserRoleType::authenticated_user ) );
         }
-        if ( $check_type_id == EnumUserRoleType::manage_student ) {
-            return in_array( $current_role_type_id, array( EnumUserRoleType::manage_student, EnumUserRoleType::manage ) );
-        }
-        if ( $check_type_id == EnumUserRoleType::manage ) {
-            return $current_role_type_id == EnumUserRoleType::manage;
+        if ( $check_type_id == EnumUserRoleType::admin ) {
+            return in_array( $current_role_type_id, array( EnumUserRoleType::admin, EnumUserRoleType::authenticated_user ) );
         }
         return false;
     }
@@ -67,33 +50,6 @@ class UserMdl extends BaseMdl {
                     last_modified = now()
                 where user_uuid = '" . $this->g_id . "';";
         return  $this->getMySql()->getQueryResult( $query );
-    }
-
-    public function updAccess( $role_type_id ) {
-        if ( ! ( new ProfileUserMdl())->userExistsInProfile( UserSessionMdl::getProfileId(), $_POST["uid"], $existing ) ) {
-            return true;
-        }
-        $query = "update tbl_user_profile_access
-                    set role_type_id = $role_type_id,
-                    last_modified = now()
-                where user_uid = '" . $this->g_id . "'
-                and profile_uuid = '" . UserSessionMdl::getProfileId() . "'
-                and soft_del = " . EnumYesNo::no;
-        if( $this->getMySql()->getQueryResult( $query ) ) {
-            $field = new FieldMdl( 
-                "profile_user", "profile_user", "Role type", true, EnumFieldDataType::_string, EnumFieldType::_string, $this->g_sql_table, true, "text", $this->g_row, EnumSqlTbl::tbl_lu_role_type, 2, null, "", 6, true
-            );
-            $field->g_old_value = $existing["role_type_id"];
-            $field->g_new_value = $role_type_id;
-            $audit_trail = new AuditTrail(
-                UserSessionMdl::getUuid(),
-                $existing["uuid"],
-                $field
-            );
-            $audit_trail->trackChange(  $field );
-            return true;
-        }
-        return false;
     }
 
     public function getFields() {

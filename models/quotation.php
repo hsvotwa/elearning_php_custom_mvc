@@ -27,7 +27,7 @@ class studentMdl extends BaseMdl {
     }
 
     protected function setAddtionalSqlField() {
-        $this->g_additional_sql = "profile_uuid = '" . UserSessionMdl::getProfileId() . "'";
+        // $this->g_additional_sql = "profile_uuid = '" . UserSessionMdl::getProfileId() . "'";
     }
 
     private function getCurrentUnitCount() {

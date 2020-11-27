@@ -20,11 +20,11 @@ class UserController extends BaseController {
         }
         $this->g_record_id = $model->g_row["user_uuid"];
         $this->g_form_fields = ( $model )->getFields();
-        if ( ( new ProfileUserMdl())->userExistsInProfile( UserSessionMdl::getProfileId(), $id, $existing ) ) {
-            $this->g_other_data = array(
-                "uuid" => $existing["uuid"]
-            );
-        }
+        // if ( ( new ProfileUserMdl() )->userExistsInProfile( UserSessionMdl::getProfileId(), $id, $existing ) ) {
+        //     $this->g_other_data = array(
+        //         "uuid" => $existing["uuid"]
+        //     );
+        // }
         $this->render( "edit", $model->getRecordPageTitle() );
     }
 
@@ -56,11 +56,6 @@ class UserController extends BaseController {
             return;
         }
         $this->g_record_id = $model->g_row["user_uuid"];
-        if ( ( new ProfileUserMdl())->userExistsInProfile( UserSessionMdl::getProfileId(), $id, $existing ) ) {
-            $this->g_other_data = array(
-                "uuid" => $existing["uuid"]
-            );
-        }
         $this->g_form_fields = ( $model )->getFields();
         $this->render( "detail", $model->getRecordPageTitle() );
     }
