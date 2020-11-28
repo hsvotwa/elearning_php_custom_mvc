@@ -1,7 +1,7 @@
 <?php
 class AccountController extends BaseController {
     public function __construct () {
-        $this->g_layout = "account";
+        $this->g_layout = "default";
     }
 
     function login() {
@@ -18,6 +18,10 @@ class AccountController extends BaseController {
 
     function loginfeedback() {
         $model = new LoginMdl();
+        if( ! $_POST ) {
+            $data["success"] = false;
+            return;
+        }
         $redirect_to = "";
         if ( $model->auth( $_POST["email"], $_POST["password"], $redirect_to ) ) {
             $data["success"] = true;
@@ -25,6 +29,8 @@ class AccountController extends BaseController {
             header( "Location: $redirect_to" );
             return;
         }
-        echo ( new GeneralDisplay() )->deterFeedback( false, $model->getRecordPageTitle() );
+        $data["success"] = false;
+        $data["message"] = "Incorrect username and/or password.";
+        echo json_encode( $data );
     }
 }

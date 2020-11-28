@@ -11,9 +11,6 @@
 </head>
 <body>
     <header class="nav-hd-main">
-        <div class="nav-div-prog" id="nav-div-prog">
-            <img src="<?php echo $loader_path ?>" />
-        </div>
         <a href="#" class="url_app_title"><?php echo $app_name ?></a>
         <?php 
             echo $navigation 
@@ -22,8 +19,13 @@
             <font class="font_h3"><a class="profile_name" href="<?php echo WEBROOT; ?>profiles/manage"><?php echo $selected_profile ?></a></font>
             <font class="font_white" style="font-size:12px">&nbsp;&#8226;</font>
             <font class="font_white">&nbsp;<?php echo $user_detail ?></font>
+            <div style="float-right">
+                <div class="nav-div-prog" id="nav-div-prog">
+                    <img src="<?php echo $loader_path ?>" />
+                </div>
+            </div>
         </div>
-        <div class="div_hd_logo"><a href="http://www.binarycity.com.na" target="_blank"><img src="<?php echo $logo_path ?>" id="img_bc_logo" /></a></div>
+        <div class="div_hd_logo"><a href="#" target="_blank"><img src="<?php echo $logo_path ?>" id="img_bc_logo" /></a></div>
     </header>
     <div id="div_title">
         <table class="tbl_title_nav_vert">

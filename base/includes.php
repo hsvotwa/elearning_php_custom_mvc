@@ -16,6 +16,7 @@
         } else {
             $dir = "{$root}classes";
         }
+        // var_dump($values);
         $file_name = strtolower(  implode( "_", $values ) );
         if ( file_exists( $path = "{$dir}/{$file_name}.php" ) ) {
             require_once( $path );

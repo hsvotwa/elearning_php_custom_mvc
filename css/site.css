@@ -476,7 +476,7 @@ a.url_disabled:visited {
 }
 
 .action_link,
-.action_link_#36365B,
+.action_link_red,
 .select,
 .select_fail_valid,
 .submit,
@@ -606,14 +606,14 @@ a.button {
     color: #333
 }
 
-.action_link_#36365B {
+.action_link_red {
     background-color: #36365B;
     min-width: 90px;
     text-decoration: none;
     color: #fff !important;
 }
 
-.action_link_#36365B:hover {
+.action_link_red:hover {
     background-color: green;
 }
 
@@ -631,7 +631,7 @@ a.button {
 .btn_action_pend,
 .button,
 .action_link,
-.action_link_#36365B,
+.action_link_red,
 .submit {
     cursor: pointer
 }
@@ -1112,7 +1112,7 @@ table th {
 
 .div_and_hd_green_text,
 .div_and_hd_orange_text,
-.div_and_hd_#36365B_text {
+.div_and_hd_red_text {
     width: 50%;
     padding: 10px;
     margin-left: auto;
@@ -1121,7 +1121,7 @@ table th {
 
 .div_and_hd_green_text:after,
 .div_and_hd_orange_text:after,
-.div_and_hd_#36365B_text:after {
+.div_and_hd_red_text:after {
     content: "";
     display: block;
     width: 100%;
@@ -1140,13 +1140,13 @@ table th {
     background-color: #ff9000
 }
 
-.div_and_hd_#36365B_text:after {
+.div_and_hd_red_text:after {
     background-color: #36365B
 }
 
 .div_and_hd_green_text div,
 .div_and_hd_orange_text div,
-.div_and_hd_#36365B_text div {
+.div_and_hd_red_text div {
     float: left;
     width: 100%;
     padding-top: 50%;
@@ -1159,7 +1159,7 @@ table th {
 
 .div_and_hd_green_text div>font,
 .div_and_hd_orange_text div>font,
-.div_and_hd_#36365B_text div>font {
+.div_and_hd_red_text div>font {
     color: #fff;
     font-size: 14px;
     font-weight: 400
@@ -1202,7 +1202,7 @@ table th {
 
 .div_and_bd_green,
 .div_and_bd_orange,
-.div_and_bd_#36365B {
+.div_and_bd_red {
     padding: 10px;
     text-align: center;
     border-radius: 10px;
@@ -1222,7 +1222,7 @@ table th {
     background-color: #f9e9ca
 }
 
-.div_and_bd_#36365B {
+.div_and_bd_red {
     background-color: #ffeaea
 }
 
@@ -2127,15 +2127,15 @@ table th {
 .nav-div-prog {
     display: none;
     position: fixed;
-    top: 0;
-    left: 122px;
+    top: 0px;
+    right: 350px;
     line-height: 40px;
     -webkit-transition: all 1s ease-out;
     -moz-transition: all 1s ease-out;
     -ms-transition: all 1s ease-out;
     -o-transition: all 1s ease-out;
     transition: all 1s ease-out;
-    will-change: transform
+    will-change: transform;
 }
 
 .nav-div-prog img {
@@ -3322,11 +3322,11 @@ only screen and (min-resolution:1.5dppx) {
 
 .input-validation-error,
 .error {
-    border: 1px solid #36365B !important;
+    border: 1px solid red !important;
 }
 
 .radio-validation-error {
-    color: #36365B !important;
+    color: red !important;
 }
 
 .text-center {

@@ -1,5 +1,5 @@
 <?php
-class UserMdl extends BaseMdl {
+class StudentMdl extends BaseMdl {
     public function __construct ( $id = null, $check_profile = true ) {
         $this->g_id = $id;
         $this->g_entity_name = "User";

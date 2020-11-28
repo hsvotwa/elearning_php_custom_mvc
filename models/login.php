@@ -61,13 +61,17 @@ class LoginMdl extends BaseMdl {
         if ( $this->g_fields != null ) {
             return $this->g_fields;
         }
+        // $html_name, $mysql_name, $description, $valid,
+        // $target_data_type, $target_field_type, $mysql_tbl, $compulsory, $css_class,
+        // $value_object, $mysql_ref_tbl = null, $decimal_place_count = 2,  
+        // $list_source = null, $list_default = '-- please select --', $min_length = 0
         $return = array ();
         $other_values = null;
         $return["email"] = new FieldMdl( 
-            "email", "email", "", true, EnumFieldDataType::_string, EnumFieldType::_email, $this->g_sql_table, true, "text", $other_values
+            "email", "email", "Email", true, EnumFieldDataType::_string, EnumFieldType::_email, $this->g_sql_table, true, "text", $other_values
         );
         $return["password"] = new FieldMdl( 
-            "password", "password", "", true, EnumFieldDataType::_string, EnumFieldType::_hidden, $this->g_sql_table, true, "text", $other_values
+            "password", "password", "Password", true, EnumFieldDataType::_string, EnumFieldType::_password, $this->g_sql_table, true, "text", $other_values
         );
         $this->g_fields = $return;
         return $this->g_fields;

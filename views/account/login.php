@@ -1,6 +1,3 @@
-<div style="margin: 15px 5px">
-    <input type="submit" value="Submit" class="button" />
-</div>
 <form method='post' action='<?php echo $form_action; ?>' id="frm_main">
     <table class="tbl_cont">
         <tr>
@@ -10,15 +7,22 @@
                         <tr>
                             <td class="w-50">
                                 <?php
-                                echo $form_fields["email"]->getFieldHtmlLabel();
-                                echo $form_fields["email"]->getFieldHtmlDisplay();
+                                    echo $form_fields["email"]->getFieldHtmlLabel();
+                                    echo $form_fields["email"]->getFieldHtml();
                                 ?>
                             </td>
+                        </tr>
+                        <tr>
                             <td class="w-50">
                                 <?php
-                                echo $form_fields["password"]->getFieldHtmlLabel();
-                                echo $form_fields["password"]->getFieldHtmlDisplay();
+                                    echo $form_fields["password"]->getFieldHtmlLabel();
+                                    echo $form_fields["password"]->getFieldHtml();
                                 ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="w-50">
+                                <input type="submit" value="Submit" class="button" />
                             </td>
                         </tr>
                     </table>

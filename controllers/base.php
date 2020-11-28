@@ -15,12 +15,14 @@
 
         function render( $file_name, $title = "", $return = false ) {
             $class = strtolower( str_replace( 'Controller', '', get_class( $this ) ) );
-            if( ! in_array ( $file_name, array( "login", "loginfeedback", "logout", "update", "welcome" ) ) ) {
+            if( ! in_array ( $file_name, array( "login", "loginfeedback", "logout", "welcome" ) ) &&
+                ! ( new UserMdl( UserSessionMdl::getUuid() ) )->hasAccessTo( EnumUserRoleType::none ) ) {
                 if ( ! UserSessionMdl::getUuid() ) {
                     ( new AccountController() )->login();
                     return;
                 }
             }
+            
             extract( $this->g_variables );
             ob_start();
             $gen = new GeneralDisplay();

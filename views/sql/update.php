@@ -62,8 +62,10 @@ function handleAllNavigation ( $delete_existing = true ) {
   $return && $return = handleNavigation( 'Students', 'students', 'manage', ++$sequence, EnumUserRoleType::admin, $uuid );
   $return && $return = handleNavigation( 'Users', 'users', 'manage', ++ $sequence, EnumUserRoleType::admin, $uuid );
   $return && $return = handleNavigation( 'Subjects', 'subjects', 'manage', ++$sequence, EnumUserRoleType::none, $uuid );
+  $return && $return = handleNavigation( 'Study Aids', 'aids', 'manage', ++$sequence, EnumUserRoleType::none, $uuid );
+  $return && $return = handleNavigation( 'Apply', 'subjects', 'manage', ++$sequence, EnumUserRoleType::none, $uuid );
   $return && $return = handleNavigation( 'Quotation', 'quotation', 'enquire', ++$sequence, EnumUserRoleType::none, $uuid );
-  $return && $return = handleNavigation( 'Quotation', 'statement', 'detail', ++$sequence, EnumUserRoleType::authenticated_user, $uuid );
+  $return && $return = handleNavigation( 'Statement', 'statement', 'detail', ++$sequence, EnumUserRoleType::authenticated_user, $uuid );
   $return && $return = handleNavigation ( 'Log out', 'account', 'logout', ++$sequence, EnumUserRoleType::authenticated_user, $uuid );
   $return && $return = handleNavigation ( 'Log in', 'account', 'login', ++$sequence, EnumUserRoleType::none, $uuid );
   return $return;
@@ -85,18 +87,27 @@ function handleAllLookupData() {
     array(
       "id" => $enum_val ++,
       "code" => "DSA001",
-      "name" => "Data Structures and Algorithms" 
+      "name" => "Data Structures and Algorithms",
+      "image_name" => "dsa001.png"
     ),
     array(
       "id" => $enum_val ++,
       "code" => "DMA001",
-      "name" => "Discrete Mathematics" 
+      "name" => "Discrete Mathematics",
+      "image_name" => "dma001.jpg"
     ),
     array(
       "id" => $enum_val ++,
       "code" => "WDF001",
-      "name" => "Web Development Fundamentals" 
+      "name" => "Web Development Fundamentals",
+      "image_name" => "wdf001.png" 
     ),
+    array(
+      "id" => $enum_val ++,
+      "code" => "WDA001",
+      "name" => "Web Development Advanced",
+      "image_name" => "wdf001.png" 
+    )
   ];
   $queries = array();
   foreach( $subjects as $subject ) {
@@ -109,6 +120,7 @@ function handleAllLookupData() {
                   set id = '" . $subject["id"] . "',
                   code = '" . $subject["code"] . "',
                   name = '" . $subject["name"] . "',
+                  image_name = '" . $subject["image_name"] . "',
                   created = now(),
                   last_modified = now(); ";
         return $mysql->getQueryResult ( $qry );
@@ -119,6 +131,65 @@ function handleAllLookupData() {
               name = '" . $subject["name"] . "',
               last_modified = now()
             where id = '" . $subject["id"] . ";" ;
+  }
+  //Study Aids
+  $table = EnumSqlTbl::tbl_study_aid;
+  $enum_val = 1;
+  $study_aids = [
+    array(
+      "id" => $enum_val ++,
+      "code" => "LAP001",
+      "name" => "Laptop - MacBook Pro",
+      "image_name" => "macbookpro.png",
+      "cost" => 24234.00
+    ),
+    array(
+      "id" => $enum_val ++,
+      "code" => "LAP002",
+      "name" => "Laptop - Dell Inspiron",
+      "image_name" => "dellinspiron.png",
+      "cost" => 14634.00
+    ),
+    array(
+      "id" => $enum_val ++,
+      "code" => "TAB001",
+      "name" => "Tablet - Galaxy Tab A",
+      "image_name" => "galaxytaba.png",
+      "cost" => 9675.00
+    ),
+    array(
+      "id" => $enum_val ++,
+      "code" => "TAB002",
+      "name" => "Tablet - iPad Pro",
+      "image_name" => "ipadpro.png",
+      "cost" => 18999.00
+    )
+  ];
+  foreach( $study_aids as $study_aid ) {
+    $qry = "select *
+              from {$table}
+              where ( id = '" . $study_aid["id"] . "' );";
+    $result = $mysql->getQueryResult ( $qry );
+    if ( ! $result || ! $mysql->getQueryResult ( $qry )->num_rows ) {
+        $qry = "insert into {$table}
+                  set id = '" . $study_aid["id"] . "',
+                  code = '" . $study_aid["code"] . "',
+                  name = '" . $study_aid["name"] . "',
+                  image_name = '" . $study_aid["image_name"] . "',
+                  cost = '" . $study_aid["cost"] . "',
+                  created = now(),
+                  last_modified = now(); ";
+        $mysql->getQueryResult ( $qry );
+        continue;
+    }
+    $qry = "update {$table}
+              set id = '" . $study_aid["id"] . "',
+              code = '" . $study_aid["code"] . "',
+              name = '" . $study_aid["name"] . "',
+              image_name = '" . $study_aid["image_name"] . "',
+              cost = '" . $study_aid["cost"] . "',
+              last_modified = now()
+            where id = '" . $study_aid["id"] . ";" ;
   }
   $queries[] = $qry;
   return $mysql->getQueryResult ( $queries );
@@ -167,6 +238,7 @@ function handleAllTableStructure() {
                   ->addColumn( /*$name = */'name', EnumMySqlColType::varchar, /*$len = */50, /*$def = */null, /*$allow_null = */false )
                   ->addColumn( /*$name = */'code', EnumMySqlColType::varchar, /*$len = */50, /*$def = */null, /*$allow_null = */false )
                   ->addColumn( /*$name = */'image_name', EnumMySqlColType::varchar, /*$len = */100, /*$def = */null, /*$allow_null = */false )
+                  ->addColumn( /*$name = */'cost', EnumMySqlColType::decimal, /*$len = */"18,2", /*$def = */0, /*$allow_null = */false )
                   ->addColumn( /*$name = */'created', EnumMySqlColType::date_time )
                   ->addColumn( /*$name = */'last_modified', EnumMySqlColType::date_time );
   if ( ! $db_tbl->handle() ) {
@@ -174,7 +246,7 @@ function handleAllTableStructure() {
     $return = false;
   }
   $db_tbl = ( new MySqlTable( EnumSqlTbl::tbl_subject ) )
-                  ->addColumn( /*$name = */'id', EnumMySqlColType::_int, /*$len = */11, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::primary, /*$auto_increment =*/true )
+                  ->addColumn( /*$name = */'id', EnumMySqlColType::_int, /*$len = */11, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::primary, /*$auto_increment =*/false )
                   ->addColumn( /*$name = */'name', EnumMySqlColType::varchar, /*$len = */50, /*$def = */null, /*$allow_null = */false )
                   ->addColumn( /*$name = */'code', EnumMySqlColType::varchar, /*$len = */50, /*$def = */null, /*$allow_null = */false )
                   ->addColumn( /*$name = */'image_name', EnumMySqlColType::varchar, /*$len = */100, /*$def = */null, /*$allow_null = */false )

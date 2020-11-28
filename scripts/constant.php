@@ -16,6 +16,7 @@ define ( 'EXCEPTION_MESSAGE', 'An error has occurred. Please retry.' );
 define ( 'UNAUTHORISED_MESSAGE', 'You\'re not authorised to perform this function.' );
 define ( 'INDEX_PAGE', 'index.php' );
 define ( 'AJAX_PAGE', 'index_req.php' );
+define ( 'CURRENCY_SYMBOL', 'N$' );
 
 if ( Common::isLiveServer() ) {
 	define ( 'MYSQL_HOST', 'localhost' );

@@ -1,20 +1,5 @@
 $(function() {
     focusField('email');
-    var comp_fields = "email,password";
-    $("#frm_main input").blur(function(element) {
-        validCompulsory(element.target.id, comp_fields);
-        formValidate(validatorBlur);
-    })
-    var validatorBlur = $("#frm_main").validate({
-        onclick: false,
-        errorPlacement: function(error, element) {
-            return true;
-        },
-        rules: {
-            email: { required: true },
-            password: { required: true }
-        }
-    });
     var validator = $("#frm_main").validate({
         onclick: true,
         errorPlacement: function(error, element) {
@@ -35,7 +20,7 @@ $(function() {
         e.preventDefault();
         formValidate(validator);
         if ($("#frm_main").valid()) {
-            httpHandler("/" + getBaseUrl() + "account/trylogin", "post", $("#frm_main").serialize(), redirect);
+            httpHandler("/" + getBaseUrl() + "account/loginfeedback", "post", $("#frm_main").serialize(), redirect);
         }
     });
 });
