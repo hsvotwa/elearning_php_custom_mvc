@@ -48,6 +48,8 @@
         const tbl_lu_user_type = "tbl_lu_user_type";
         const tbl_lu_role_type = "tbl_lu_role_type";
         const tbl_study_aid = "tbl_study_aid";
+        const tbl_student_subject = "tbl_student_subject";
+        const tbl_student_aid = "tbl_student_aid";
     }
 
     final class EnumMySqlColType {

@@ -25,4 +25,10 @@ class SubjectsController extends BaseController {
         $this->g_records = $model->getRecords();
         $this->render("list");
     }
+
+    function unlinkedlist( $search_text, $student_uuid ) {
+        $this->g_layout = null;
+        $this->g_records = LookupData::getUnlinkedSubjectList( $search_text, $student_uuid );
+        $this->render("unlinkedlist");
+    }
 }

@@ -30,7 +30,7 @@ class GeneralDisplay {
         }
         $echo .= $this->getCssRef('css/vendor/jquery-ui.css');
         $echo .= $this->getCssRef('css/vendor/toastr.min.css');
-        $echo .= '<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700" />';
+        $echo .= '<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700" />';
         return $echo;
     }
 

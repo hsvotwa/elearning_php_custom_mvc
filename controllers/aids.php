@@ -25,4 +25,10 @@ class AidsController extends BaseController {
         $this->g_records = $model->getRecords();
         $this->render( "list" );
     }
+
+    function unlinkedlist( $search_text, $student_uuid ) {
+        $this->g_layout = null;
+        $this->g_records = LookupData::getUnlinkedStudyAidList( $search_text, $student_uuid );
+        $this->render("unlinkedlist");
+    }
 }

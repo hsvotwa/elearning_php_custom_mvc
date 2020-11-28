@@ -63,7 +63,7 @@ function handleAllNavigation ( $delete_existing = true ) {
   $return && $return = handleNavigation( 'Users', 'users', 'manage', ++ $sequence, EnumUserRoleType::admin, $uuid );
   $return && $return = handleNavigation( 'Subjects', 'subjects', 'manage', ++$sequence, EnumUserRoleType::none, $uuid );
   $return && $return = handleNavigation( 'Study Aids', 'aids', 'manage', ++$sequence, EnumUserRoleType::none, $uuid );
-  $return && $return = handleNavigation( 'Apply', 'subjects', 'manage', ++$sequence, EnumUserRoleType::none, $uuid );
+  $return && $return = handleNavigation( 'Apply', 'student', 'apply', ++$sequence, EnumUserRoleType::none, $uuid );
   $return && $return = handleNavigation( 'Quotation', 'quotation', 'enquire', ++$sequence, EnumUserRoleType::none, $uuid );
   $return && $return = handleNavigation( 'Statement', 'statement', 'detail', ++$sequence, EnumUserRoleType::authenticated_user, $uuid );
   $return && $return = handleNavigation ( 'Log out', 'account', 'logout', ++$sequence, EnumUserRoleType::authenticated_user, $uuid );
@@ -278,6 +278,24 @@ function handleAllTableStructure() {
                   ->addColumn( /*$name = */'status_id', EnumMySqlColType::tinyint, /*$len = */50, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::index )
                   ->addColumn( /*$name = */'created', EnumMySqlColType::date_time )
                   ->addColumn( /*$name = */'last_modified', EnumMySqlColType::date_time );
+    if ( ! $db_tbl->handle() ) {
+      echo "Could not create/alter table: {$db_tbl->getName()} </br>";
+      $return = false;
+    }
+    $db_tbl = ( new MySqlTable( EnumSqlTbl::tbl_student_subject ) )
+                ->addColumn( /*$name = */'uuid', EnumMySqlColType::char, /*$len = */36, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::uniq )
+                ->addColumn( /*$name = */'student_uuid', EnumMySqlColType::char, /*$len = */36, /*$def = */null, /*$allow_null = */true, EnumMySqlIndexType::uniq )
+                ->addColumn( /*$name = */'subject_uuid', EnumMySqlColType::char, /*$len = */36, /*$def = */null, /*$allow_null = */false )
+                ->addColumn( /*$name = */'soft_deleted', EnumMySqlColType::tinyint, /*$len = */4, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::index );
+    if ( ! $db_tbl->handle() ) {
+      echo "Could not create/alter table: {$db_tbl->getName()} </br>";
+      $return = false;
+    }
+     $db_tbl = ( new MySqlTable( EnumSqlTbl::tbl_student_aid ) )
+                ->addColumn( /*$name = */'uuid', EnumMySqlColType::char, /*$len = */36, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::uniq )
+                ->addColumn( /*$name = */'student_uuid', EnumMySqlColType::char, /*$len = */36, /*$def = */null, /*$allow_null = */true, EnumMySqlIndexType::uniq )
+                ->addColumn( /*$name = */'study_aid_uuid', EnumMySqlColType::char, /*$len = */36, /*$def = */null, /*$allow_null = */false )
+                ->addColumn( /*$name = */'soft_deleted', EnumMySqlColType::tinyint, /*$len = */4, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::index );
     if ( ! $db_tbl->handle() ) {
       echo "Could not create/alter table: {$db_tbl->getName()} </br>";
       $return = false;
