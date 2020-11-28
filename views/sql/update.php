@@ -87,25 +87,73 @@ function handleAllLookupData() {
     array(
       "id" => $enum_val ++,
       "code" => "DSA001",
-      "name" => "Data Structures and Algorithms",
+      "name" => "Data Structures and Algorithms Beginner",
       "image_name" => "dsa001.png"
     ),
     array(
       "id" => $enum_val ++,
       "code" => "DMA001",
-      "name" => "Discrete Mathematics",
+      "name" => "Discrete Mathematics Beginner",
       "image_name" => "dma001.jpg"
     ),
     array(
       "id" => $enum_val ++,
-      "code" => "WDF001",
-      "name" => "Web Development Fundamentals",
+      "code" => "WDE001",
+      "name" => "Web Development Beginner",
       "image_name" => "wdf001.png" 
     ),
     array(
       "id" => $enum_val ++,
-      "code" => "WDA001",
+      "code" => "DSA002",
+      "name" => "Data Structures and Algorithms Intermediate",
+      "image_name" => "dsa001.png"
+    ),
+    array(
+      "id" => $enum_val ++,
+      "code" => "DMA002",
+      "name" => "Discrete Mathematics Intermediate",
+      "image_name" => "dma001.jpg"
+    ),
+    array(
+      "id" => $enum_val ++,
+      "code" => "WDE002",
+      "name" => "Web Development Intermediate",
+      "image_name" => "wdf001.png" 
+    ),
+    array(
+      "id" => $enum_val ++,
+      "code" => "DSA003",
+      "name" => "Data Structures and Algorithms Advanced",
+      "image_name" => "dsa001.png"
+    ),
+    array(
+      "id" => $enum_val ++,
+      "code" => "DMA003",
+      "name" => "Discrete Mathematics Advanced",
+      "image_name" => "dma001.jpg"
+    ),
+    array(
+      "id" => $enum_val ++,
+      "code" => "WDE003",
       "name" => "Web Development Advanced",
+      "image_name" => "wdf001.png" 
+    ),
+    array(
+      "id" => $enum_val ++,
+      "code" => "DSA004",
+      "name" => "Data Structures and Algorithms Expert",
+      "image_name" => "dsa001.png"
+    ),
+    array(
+      "id" => $enum_val ++,
+      "code" => "DMA004",
+      "name" => "Discrete Mathematics Expert",
+      "image_name" => "dma001.jpg"
+    ),
+    array(
+      "id" => $enum_val ++,
+      "code" => "WDE004",
+      "name" => "Web Development Expert",
       "image_name" => "wdf001.png" 
     )
   ];
@@ -123,12 +171,14 @@ function handleAllLookupData() {
                   image_name = '" . $subject["image_name"] . "',
                   created = now(),
                   last_modified = now(); ";
-        return $mysql->getQueryResult ( $qry );
+         $mysql->getQueryResult ( $qry );
+         continue;
     }
     $qry = "update {$table}
               set id = '" . $subject["id"] . "',
               code = '" . $subject["code"] . "',
               name = '" . $subject["name"] . "',
+              image_name = '" . $subject["image_name"] . "',
               last_modified = now()
             where id = '" . $subject["id"] . ";" ;
   }
@@ -139,30 +189,58 @@ function handleAllLookupData() {
     array(
       "id" => $enum_val ++,
       "code" => "LAP001",
-      "name" => "Laptop - MacBook Pro",
+      "name" => "Laptop - MacBook Pro 2020",
       "image_name" => "macbookpro.png",
       "cost" => 24234.00
     ),
     array(
       "id" => $enum_val ++,
       "code" => "LAP002",
-      "name" => "Laptop - Dell Inspiron",
+      "name" => "Laptop - Dell Inspiron 2020",
       "image_name" => "dellinspiron.png",
       "cost" => 14634.00
     ),
     array(
       "id" => $enum_val ++,
       "code" => "TAB001",
-      "name" => "Tablet - Galaxy Tab A",
+      "name" => "Tablet - Galaxy Tab A 2020",
       "image_name" => "galaxytaba.png",
       "cost" => 9675.00
     ),
     array(
       "id" => $enum_val ++,
       "code" => "TAB002",
-      "name" => "Tablet - iPad Pro",
+      "name" => "Tablet - iPad Pro 2020",
       "image_name" => "ipadpro.png",
       "cost" => 18999.00
+    ),
+    array(
+      "id" => $enum_val ++,
+      "code" => "LAP003",
+      "name" => "Laptop - MacBook Pro 2021",
+      "image_name" => "macbookpro.png",
+      "cost" => 24234.00
+    ),
+    array(
+      "id" => $enum_val ++,
+      "code" => "LAP004",
+      "name" => "Laptop - Dell Inspiron 2021",
+      "image_name" => "dellinspiron.png",
+      "cost" => 18634.00
+    ),
+    array(
+      "id" => $enum_val ++,
+      "code" => "TAB003",
+      "name" => "Tablet - Galaxy Tab A 2021",
+      "image_name" => "galaxytaba.png",
+      "cost" => 12675.00
+    ),
+    array(
+      "id" => $enum_val ++,
+      "code" => "TAB004",
+      "name" => "Tablet - iPad Pro 2021",
+      "image_name" => "ipadpro.png",
+      "cost" => 20999.00
     )
   ];
   foreach( $study_aids as $study_aid ) {
@@ -285,7 +363,7 @@ function handleAllTableStructure() {
     $db_tbl = ( new MySqlTable( EnumSqlTbl::tbl_student_subject ) )
                 ->addColumn( /*$name = */'uuid', EnumMySqlColType::char, /*$len = */36, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::uniq )
                 ->addColumn( /*$name = */'student_uuid', EnumMySqlColType::char, /*$len = */36, /*$def = */null, /*$allow_null = */true, EnumMySqlIndexType::uniq )
-                ->addColumn( /*$name = */'subject_uuid', EnumMySqlColType::char, /*$len = */36, /*$def = */null, /*$allow_null = */false )
+                ->addColumn( /*$name = */'subject_id', EnumMySqlColType::_int, /*$len = */11, /*$def = */null, /*$allow_null = */false )
                 ->addColumn( /*$name = */'soft_deleted', EnumMySqlColType::tinyint, /*$len = */4, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::index );
     if ( ! $db_tbl->handle() ) {
       echo "Could not create/alter table: {$db_tbl->getName()} </br>";
@@ -294,7 +372,7 @@ function handleAllTableStructure() {
      $db_tbl = ( new MySqlTable( EnumSqlTbl::tbl_student_aid ) )
                 ->addColumn( /*$name = */'uuid', EnumMySqlColType::char, /*$len = */36, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::uniq )
                 ->addColumn( /*$name = */'student_uuid', EnumMySqlColType::char, /*$len = */36, /*$def = */null, /*$allow_null = */true, EnumMySqlIndexType::uniq )
-                ->addColumn( /*$name = */'study_aid_uuid', EnumMySqlColType::char, /*$len = */36, /*$def = */null, /*$allow_null = */false )
+                ->addColumn( /*$name = */'study_aid_id', EnumMySqlColType::_int, /*$len = */11, /*$def = */null, /*$allow_null = */false )
                 ->addColumn( /*$name = */'soft_deleted', EnumMySqlColType::tinyint, /*$len = */4, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::index );
     if ( ! $db_tbl->handle() ) {
       echo "Could not create/alter table: {$db_tbl->getName()} </br>";

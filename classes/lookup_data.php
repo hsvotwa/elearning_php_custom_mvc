@@ -20,22 +20,22 @@ class LookupData {
     
     public static function getUnlinkedSubjectList( $search_text, $student_uuid ) {
         $query = "select 
-                    uuid as value, 
+                    id as value, 
                     name 
                 from tbl_subject
-                where uuid not in (select uuid from tbl_student_subject where student_uuid = '" . $student_uuid . "')
-                and name like '%" . $student_uuid . "%'
+                where id not in (select subject_id from tbl_student_subject where student_uuid = '" . $student_uuid . "')
+                and (name like '%" . $search_text . "%' or code like '%" . $search_text . "%')
                 order by code";
         return ( new MySql() )->getQryRlt( $query );
     }
 
     public static function getUnlinkedStudyAidList( $search_text, $student_uuid ) {
         $query = "select 
-                    uuid as value, 
+                    id as value, 
                     name 
                 from tbl_study_aid
-                where uuid not in (select uuid from tbl_student_aid where student_uuid = '" . $student_uuid . "')
-                and name like '%" . $student_uuid . "%'
+                where id not in (select study_aid_id from tbl_student_aid where student_uuid = '" . $student_uuid . "')
+                and (name like '%" . $search_text . "%' or code like '%" . $search_text . "%')
                 order by code";
         return ( new MySql() )->getQryRlt( $query );
     }

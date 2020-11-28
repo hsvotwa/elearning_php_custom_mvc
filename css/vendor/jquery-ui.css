@@ -1140,7 +1140,7 @@ a:visited.ui-button,
 .ui-button:hover,
 .ui-button:focus {
     border: 1px solid #cccccc;
-    background: #ededed;
+    background: aliceblue;
     font-weight: normal;
     color: #2b2b2b;
 }
@@ -3162,7 +3162,7 @@ body .ui-tooltip {
 }
 
 .ui-widget-header {
-    border: 1px solid #f1f1f1;
+    border: 1px solid aliceblue;
     border-top-width: 0px;
     border-right-width: 0px;
     background: #fff;
@@ -3189,8 +3189,8 @@ works properly when clicked or hovered */
 html .ui-button.ui-state-disabled:hover,
 html .ui-button.ui-state-disabled:active {
     border: 6px solid #d3d3d3;
-    background-color: #f1f1f1;
-    border: 1px solid #f1f1f1;
+    background-color: aliceblue;
+    border: 1px solid aliceblue;
     font-weight: 400;
     color: #555;
 }
@@ -3215,7 +3215,7 @@ a:visited.ui-button,
 .ui-button:hover,
 .ui-button:focus {
     border: 1px solid #cccccc;
-    background: #ededed;
+    background: aliceblue;
     font-weight: normal;
     color: #2b2b2b;
 }
@@ -3244,8 +3244,8 @@ a.ui-button:focus {
 a.ui-button:active,
 .ui-button:active,
 .ui-button.ui-state-active:hover {
-    border: 1px solid #f1f1f1;
-    background: #f1f1f1;
+    border: 1px solid aliceblue;
+    background: aliceblue;
     font-weight: normal;
     color: #000;
 }
@@ -3260,6 +3260,8 @@ a.ui-button:active,
 .ui-state-active a:link,
 .ui-state-active a:visited {
     color: #000;
+    font-weight: bold;
+    text-decoration: underline !important;
     text-decoration: none;
 }
 

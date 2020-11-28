@@ -11,6 +11,9 @@
                         <li id="li-tab-subjects">
                             <a href="#tab-subjects" id="tab-link-subjects">Subjects & Study aids</a>
                         </li>
+                        <li id="li-tab-subjects">
+                            <a href="#tab-subjects" id="tab-link-subjects">Quotation & Funding</a>
+                        </li>
                     </ul>
                     <div id="tab-gen">
                         <input type="hidden" name="uuid" id="uuid" value="<?php echo $record_id; ?>" />

@@ -23,34 +23,19 @@ $(function() {
 });
 
 //Link student
-function linkssubject() {
-    var validatorstudent = $("#frm_link_student").validate({
-        onclick: true,
-        ignore: [],
-        errorPlacement: function(error, element) {
-            return true;
-        },
-        rules: {
-            student_uuid: { required: true },
-            student: { required: true },
-            unit_uuid: { required: true },
-        },
-        highlight: function(element, errorClass, validClass) {
-            $(element).addClass("input-validation-error");
-        },
-        unhighlight: function(element, errorClass, validClass) {
-            $(element).removeClass("input-validation-error");
-        }
-    });
-    if ($("#student_uuid").val() === "") {
-        $("#student").addClass("input-validation-error");
-        $("#student").val("");
-        $("#student").focus();
-        return;
-    }
+function linkSubject(subject_uuid) {
+    // if ($("#subject_uuid").val() === "") {
+    //     $("#subject").addClass("input-validation-error");
+    //     $("#subject").val("");
+    //     $("#subject").focus();
+    //     return;
+    // }
     formValidate(validatorstudent);
     if ($("#frm_link_student").valid()) {
-        httpHandler("/" + getBaseUrl() + "unit/savestudent", "post", $("#frm_link_student").serialize(), studentPostSuccess, undefined, undefined, undefined, 'error_label');
+        httpHandler("/" + getBaseUrl() + "unit/savestudent", "post", {
+            subject_uuid: subject_uuid,
+            student_uuid: $("#uuid").val()
+        }, studentPostSuccess, undefined, undefined, undefined, 'error_label');
     }
 }
 
@@ -62,7 +47,7 @@ function linkSubject(subject_uuid) {
     httpHandler("/" + getBaseUrl() + "student/linksubject", "post", data, loadSubjects);
 }
 
-function removeSubject($student_subject_uuid) {
+function removeSubject(student_subject_uuid) {
     confirmDialog("remove_subject", "Confirm", "Are you sure you want to remove this student?", function() {
         var data = {
             student_subject_uuid: student_subject_uuid

@@ -28,9 +28,9 @@ class studentController extends BaseController {
         $model = new StudentMdl( $uuid );
         $model->getFields();
         $error_message = "";
-        if( ! ( new StudentMgr() )->validIdNum( $_POST['id_no'], $uuid ) ) {
+        if( ! ( new StudentMgr() )->validEmail( $_POST['email'], $uuid ) ) {
             $data["success"] = false;
-            $data["message"] = "The ID number you provided is already registered for another student.";
+            $data["message"] = "The email address you provided is already registered for another student.";
             echo json_encode( $data );
             return;
         }
@@ -63,11 +63,55 @@ class studentController extends BaseController {
             return;
         }
         $this->g_can_edit = true;
-        $complex_uuid = ( new UnitMdl( $unit_uuid ) )->g_row["complex_uuid"];
-        $model = new DeviceMgr( $unit_uuid, $complex_uuid );
+        $model = new StudentMgr( $student_uuid );
         $this->g_layout = null;
         $error_message = "";
-        $this->g_records = $model->getRecords();
-        $this->render("devicelist");
+        $this->g_records = $model->getAids();
+        $this->render("list");
+    }
+
+    function getsubjects( $student_uuid ) {
+        if( ! ( new UserMdl() )->hasAccessTo( EnumUserRoleType::none ) ) {
+            echo ( new GeneralDisplay() )->deterFeedback( false, "", UNAUTHORISED_MESSAGE );
+            return;
+        }
+        $this->g_can_edit = true;
+        $model = new StudentMgr( $student_uuid );
+        $this->g_layout = null;
+        $error_message = "";
+        $this->g_records = $model->getSubjects();
+        $this->render("list");
+    }
+
+    function linksubject() {
+        $model = new StudentMdl();
+        $model->getFields();
+        $error = "";
+        $success = $model->linkSubject( $error );
+        echo ( new GeneralDisplay() )->deterFeedback( $success, "", $error );
+    }
+
+    function removesubject() {
+        $model = new StudentMdl();
+        $model->getFields();
+        $message = "";
+        $success = $model->removeSubject( $message );
+        echo ( new GeneralDisplay() )->deterFeedback( $success, "", $message );
+    }
+
+    function linkaid() {
+        $model = new StudentMdl();
+        $model->getFields();
+        $error = "";
+        $success = $model->linkAid( $error );
+        echo ( new GeneralDisplay() )->deterFeedback( $success, "", $error );
+    }
+
+    function removeaid() {
+        $model = new StudentMdl();
+        $model->getFields();
+        $message = "";
+        $success = $model->removeAid( $message );
+        echo ( new GeneralDisplay() )->deterFeedback( $success, "", $message );
     }
 }
