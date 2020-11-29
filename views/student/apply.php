@@ -6,18 +6,17 @@
                 <div id="tab">
                     <ul>
                         <li id="li-tab-gen">
-                            <a href="#tab-gen">Your information</a>
+                            <a href="#tab-gen">Detail & Payment options</a>
                         </li>
-                        <li id="li-tab-subjects">
-                            <a href="#tab-subjects" id="tab-link-subjects">Subjects & Study aids</a>
+                        <li id="li-tab-subjects" style="display:none;">
+                            <a href="#tab-subjects" id="tab-link-subjects">Subjects & Study Aids</a>
                         </li>
-                        <li id="li-tab-subjects">
-                            <a href="#tab-subjects" id="tab-link-subjects">Quotation & Funding</a>
+                        <li id="li-tab-quotation" style="display:none;">
+                            <a href="#tab-quotation" id="tab-link-quotation">Quotation</a>
                         </li>
                     </ul>
                     <div id="tab-gen">
                         <input type="hidden" name="uuid" id="uuid" value="<?php echo $record_id; ?>" />
-                        <input type="submit" class="hidden" />
                         <table class="w-100">
                             <tr>
                                 <td class="w-50">
@@ -40,10 +39,16 @@
                                     echo $form_fields["email"]->getFieldHtml();
                                     ?>
                                 </td>
+                                <td class="w-50">
+                                    <?php
+                                    echo $form_fields["payment_term_id"]->getFieldHtmlLabel();
+                                    echo $form_fields["payment_term_id"]->getFieldHtml();
+                                    ?>
+                                </td>
                             </tr>
                         </table>
                     </div>
-                    <div id="tab-subjects">
+                    <div id="tab-subjects" style="display:none;">
                         <table class="w-100">
                             <tr>
                                 <td class="w-50 align-top">
@@ -73,12 +78,18 @@
                             </tr>
                         </table>
                     </div>
+                    <div id="tab-quotation" style="display:none;">
+                        <div id="quotation_breakdown"></div>
+                    </div>
                 </div>
             </td>
         </tr>
         <tr>
             <td class="w-50">
-                <input type="submit" value="Submit" class="button" />
+                <input type="submit" value="Save" class="button" />
+            </td>
+            <td class="w-50">
+                <input type="submit" value="Submit application" class="button" formaction="<?php APP_DOMAIN . "student/submitapplication"; ?>" />
             </td>
         </tr>
     </table>

@@ -77,18 +77,15 @@
             if ( ! $uuid || ! $this->g_fields ) {
                 return false;
             }
-            if ( $this->getMySql()->getQryRlt ( 
+            return $this->getMySql()->getQryRlt ( 
                 $this->getMySql()->getUpdateQuery( 
                     $this->g_sql_table, 
                     $uuid, 
                     $this->g_fields, 
                     EnumSqlQryType::none, 
                     true,
-                    $this->g_additional_sql ) ) 
-                ) {
-                return $this->trackChange ( $uuid );
-            }
-            return false;
+                    $this->g_additional_sql )
+                );
         }
     
         public function trackChange ( $uuid ) {

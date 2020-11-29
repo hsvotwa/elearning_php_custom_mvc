@@ -31,16 +31,18 @@ var httpHandler = function(http_url, _type, _model, callBack, extra, showError, 
                             if (callBack !== null) {
                                 callBack(response);
                             }
-                            toastr.success(response.success, "Success");
+                            toastr.success(response.message, "Success");
                             return;
                         } else if (typeof(message_field) !== "undefined") {
                             $("#" + message_field).html(response.message);
                             setTimeout(function() {
                                 $("#" + message_field).html('');
                             }, 8000);
+                            toastr.error(response.message, "Error");
                             return;
                         }
                         toastr.error(response.message, "Error");
+                        return;
                     } else if (response.success) {
                         if (callBack !== null) {
                             callBack(response);

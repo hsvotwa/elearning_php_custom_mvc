@@ -14,6 +14,18 @@
         const inactive = 2;
     }
 
+    final class EnumStudentStatus {
+        const applied = 0;
+        const active = 1;
+        const inactive = 2;
+    }
+
+    final class EnumPaymentTerm {
+        const one_year = 1;
+        const two_years = 2;
+        const three_years = 3;
+    }
+
     final class EnumYesNo {
         const no = 0;
         const yes = 1;
@@ -50,6 +62,7 @@
         const tbl_study_aid = "tbl_study_aid";
         const tbl_student_subject = "tbl_student_subject";
         const tbl_student_aid = "tbl_student_aid";
+        const tbl_lu_payment_term = "tbl_lu_payment_term";
     }
 
     final class EnumMySqlColType {

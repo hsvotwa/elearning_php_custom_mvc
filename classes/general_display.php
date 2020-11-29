@@ -21,13 +21,7 @@ class GeneralDisplay {
     }
 
     public function getCss() {
-        $echo = '<link rel="shortcut icon" href="' . WEBROOT . 'images/favicon.ico" type="image/x-icon" />';
-        $echo .= '<link rel="icon" href="' . WEBROOT . 'images/favicon.ico" type="image/x-icon" />';
-        if( Common::isLiveServer() ) {
-            $echo .= $this->getCssRef( 'css/site.css' );
-        } else {
-            $echo .= $this->getCssRef( 'css/site.css' );
-        }
+        $echo = $this->getCssRef( 'css/site.css' );
         $echo .= $this->getCssRef('css/vendor/jquery-ui.css');
         $echo .= $this->getCssRef('css/vendor/toastr.min.css');
         $echo .= '<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700" />';
@@ -310,7 +304,7 @@ class GeneralDisplay {
         $data = array();
         $data["success"] = $success;
         $data["title"] = $new_title;
-        if( ! is_null( $messages ) ) {
+        if( ! is_null( $messages ) && $messages ) {
             if( ! is_array( $messages ) && $messages != "" ) {
                 $data["message"] = $messages;
             } else if ( ! empty ( $messages ) ) {
@@ -324,6 +318,8 @@ class GeneralDisplay {
             }
         } else if( ! $success ) {
             $data["message"] = "Data was not saved.";
+        } else {
+            $data["message"] = "Data successfully saved.";
         }
         return json_encode( $data );
    }

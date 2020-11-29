@@ -17,6 +17,15 @@ class LookupData {
                 order by name";
         return ( new MySql() )->getQryRlt( $query );
     }
+
+    public static function getPaymentTermList() {
+        $query = "select 
+                    enum_id as value, 
+                    name 
+                from tbl_lu_payment_term
+                order by name";
+        return ( new MySql() )->getQryRlt( $query );
+    }
     
     public static function getUnlinkedSubjectList( $search_text, $student_uuid ) {
         $query = "select 
@@ -34,7 +43,7 @@ class LookupData {
                     id as value, 
                     name 
                 from tbl_study_aid
-                where id not in (select study_aid_id from tbl_student_aid where student_uuid = '" . $student_uuid . "')
+                where id not in (select aid_id from tbl_student_aid where student_uuid = '" . $student_uuid . "')
                 and (name like '%" . $search_text . "%' or code like '%" . $search_text . "%')
                 order by code";
         return ( new MySql() )->getQryRlt( $query );

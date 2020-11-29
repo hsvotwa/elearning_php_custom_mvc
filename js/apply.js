@@ -17,31 +17,45 @@ $(function() {
         e.preventDefault();
         formValidate(validator);
         if ($("#frm_main").valid()) {
-            httpHandler("/" + getBaseUrl() + "student/saveapplication", "post", $("#frm_main").serialize(), doUIUpdate, undefined, undefined, undefined, 'error_label');
+            httpHandler("/" + getBaseUrl() + "student/saveapplication", "post", $("#frm_main").serialize(), doUIUpdateMain, undefined, undefined, undefined, 'error_label');
         }
     });
 });
 
-//Link student
-function linkSubject(subject_uuid) {
-    // if ($("#subject_uuid").val() === "") {
-    //     $("#subject").addClass("input-validation-error");
-    //     $("#subject").val("");
-    //     $("#subject").focus();
-    //     return;
-    // }
-    formValidate(validatorstudent);
-    if ($("#frm_link_student").valid()) {
-        httpHandler("/" + getBaseUrl() + "unit/savestudent", "post", {
-            subject_uuid: subject_uuid,
-            student_uuid: $("#uuid").val()
-        }, studentPostSuccess, undefined, undefined, undefined, 'error_label');
-    }
+function doUIUpdateMain() {
+    $("#li-tab-subjects").fadeIn();
+    $("#tab-subjects").fadeIn();
+    // $("#tab-link-quotation").fadeIn();
+    $("#tab-link-subjects").trigger('click');
 }
 
-function linkSubject(subject_uuid) {
+function doUIUpdateSubjects(show) {
+    if (show) {
+        $("#li-tab-quotation").fadeIn();
+        $("#tab-quotation").fadeIn();
+        // $("#tab-link-quotation").trigger('click');
+        $("#subject").focus();
+        return;
+    }
+    $("#li-tab-quotation").fadeOut();
+    $("#tab-quotation").fadeOut();
+}
+
+function doUIUpdateAids(show) {
+    if (show) {
+        $("#li-tab-quotation").fadeIn();
+        $("#tab-quotation").fadeIn();
+        // $("#tab-link-quotation").trigger('click');
+        return;
+    }
+    $("#li-tab-quotation").fadeOut();
+    $("#tab-quotation").fadeOut();
+}
+
+//Link student
+function linkSubject(subject_id) {
     var data = {
-        subject_uuid: subject_uuid,
+        subject_id: subject_id,
         student_uuid: $("#uuid").val()
     };
     httpHandler("/" + getBaseUrl() + "student/linksubject", "post", data, loadSubjects);
@@ -60,13 +74,21 @@ function loadSubjects() {
     httpHandler("/" + getBaseUrl() + "student/getsubjects/" + $("#uuid").val() + "/", "get", null,
         function(html) {
             $("#subject_list").html(html);
+            doUIUpdateSubjects(true);
+        }, null, false);
+}
+
+function loadQuotation() {
+    httpHandler("/" + getBaseUrl() + "student/getsubjects/" + $("#uuid").val() + "/", "get", null,
+        function(html) {
+            $("#subject_list").html(html);
         }, null, false);
 }
 
 //Study aids
-function linkAid(aid_uuid) {
+function linkAid(aid_id) {
     var data = {
-        aid_uuid: aid_uuid,
+        aid_id: aid_id,
         student_uuid: $("#uuid").val()
     };
     httpHandler("/" + getBaseUrl() + "student/linkaid", "post", data, loadAids);
@@ -84,6 +106,7 @@ function removeAid(student_aid_uuid) {
 function loadAids() {
     httpHandler("/" + getBaseUrl() + "student/getaids/" + $("#uuid").val() + "/", "get", null,
         function(html) {
+            doUIUpdateAids(true);
             $("#aid_list").html(html);
         }, null, false);
 }

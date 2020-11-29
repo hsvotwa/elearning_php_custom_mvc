@@ -28,12 +28,15 @@ class studentController extends BaseController {
         $model = new StudentMdl( $uuid );
         $model->getFields();
         $error_message = "";
-        if( ! ( new StudentMgr() )->validEmail( $_POST['email'], $uuid ) ) {
+        $mgr = new StudentMgr();
+        if( ! $mgr->validEmail( $_POST['email'], $uuid ) ) {
             $data["success"] = false;
             $data["message"] = "The email address you provided is already registered for another student.";
             echo json_encode( $data );
             return;
         }
+        $student_no = $mgr->getNextStudentNumber();
+        $model->g_additional_sql = " student_no = '$student_no', status_id = '" . EnumStudentStatus::applied . "'";
         $success = $model->set();
         if ( $error_message ) {
             $model->g_errors[] = $error_message;
@@ -63,11 +66,11 @@ class studentController extends BaseController {
             return;
         }
         $this->g_can_edit = true;
-        $model = new StudentMgr( $student_uuid );
+        $model = new StudentMdl( $student_uuid );
         $this->g_layout = null;
         $error_message = "";
         $this->g_records = $model->getAids();
-        $this->render("list");
+        $this->render("aidlist");
     }
 
     function getsubjects( $student_uuid ) {
@@ -76,11 +79,11 @@ class studentController extends BaseController {
             return;
         }
         $this->g_can_edit = true;
-        $model = new StudentMgr( $student_uuid );
+        $model = new StudentMdl( $student_uuid );
         $this->g_layout = null;
         $error_message = "";
         $this->g_records = $model->getSubjects();
-        $this->render("list");
+        $this->render("subjectlist");
     }
 
     function linksubject() {
