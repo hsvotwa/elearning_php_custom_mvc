@@ -622,6 +622,12 @@ a.button {
     background-color: green;
 }
 
+.bg_green {
+    background-color: green;
+    color: white;
+    border: 1px solid #fff;
+}
+
 .action_link {
     background-color: green;
     min-width: 90px;
@@ -933,7 +939,7 @@ table th {
 .tbl_cont_data thead {
     display: none;
     position: fixed;
-    top: 112px;
+    top: 134px;
     opacity: .96;
     z-index: 1;
     min-height: 24px;
@@ -948,7 +954,7 @@ table th {
     -moz-transition-delay: .3s;
     -ms-transition-delay: .3s;
     -o-transition-delay: .3s;
-    transition-delay: .3s
+    transition-delay: .3s;
 }
 
 .tbl_cont_data thead:after {

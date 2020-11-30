@@ -8,7 +8,7 @@ class studentsController extends BaseController {
             ( new ErrorController() )->Error403();
             return;
         }
-        $this->g_can_edit = ( new UserMdl() )->hasAccessTo( EnumUserRoleType::manage_student );
+        $this->g_can_edit = ( new UserMdl() )->hasAccessTo( EnumUserRoleType::none );
         $mgr = new studentMgr();
         $this->render( "manage", $mgr->getRecordPageTitle() );
     }
@@ -18,7 +18,7 @@ class studentsController extends BaseController {
             echo ( new GeneralDisplay() )->deterFeedback( false, "", UNAUTHORISED_MESSAGE );
             return;
         }
-        $this->g_can_edit = ( new UserMdl() )->hasAccessTo( EnumUserRoleType::manage_student );
+        $this->g_can_edit = ( new UserMdl() )->hasAccessTo( EnumUserRoleType::none );
         $model = new studentMgr( "", $search_text );
         $this->g_layout = null;
         $this->g_form_fields = ( new studentMdl() )->getFields();
@@ -31,7 +31,7 @@ class studentsController extends BaseController {
             echo ( new GeneralDisplay() )->deterFeedback( false, "", UNAUTHORISED_MESSAGE );
             return;
         }
-        $this->g_can_edit = ( new UserMdl() )->hasAccessTo( EnumUserRoleType::manage_student );
+        $this->g_can_edit = ( new UserMdl() )->hasAccessTo( EnumUserRoleType::none );
         $model = new studentDocumentMgr( $search_text );
         $this->g_layout = null;
         $this->g_form_fields = ( new studentDocumentMdl() )->getFields();
@@ -40,7 +40,7 @@ class studentsController extends BaseController {
     }
 
     function unlinkedlist( $search_text ) {
-        if( ! ( new UserMdl() )->hasAccessTo( EnumUserRoleType::manage_student ) ) {
+        if( ! ( new UserMdl() )->hasAccessTo( EnumUserRoleType::none ) ) {
             echo ( new GeneralDisplay() )->deterFeedback( false, "", UNAUTHORISED_MESSAGE );
             return;
         }

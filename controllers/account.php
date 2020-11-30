@@ -26,7 +26,7 @@ class AccountController extends BaseController {
         if ( $model->auth( $_POST["email"], $_POST["password"], $redirect_to ) ) {
             $data["success"] = true;
             $data["redirect_to"] = $redirect_to;
-            header( "Location: $redirect_to" );
+            echo json_encode( $data );
             return;
         }
         $data["success"] = false;

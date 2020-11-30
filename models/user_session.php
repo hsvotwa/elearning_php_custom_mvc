@@ -32,14 +32,14 @@ class UserSessionMdl {
 		if ( session_status() == PHP_SESSION_NONE ) {
 			session_start();
 		}
-		return ( isset ( $_SESSION['selected_profile_name'] ) ? $_SESSION['selected_profile_name'] : null ) ;
+		return ( isset ( $_SESSION['user_type_id'] ) ? $_SESSION['user_type_id'] : null ) ;
 	}
 
 	public static function getUserType() {
 		if ( session_status() == PHP_SESSION_NONE ) {
 			session_start();
 		}
-		return ( isset ( $_SESSION['selected_profile_name'] ) ? $_SESSION['selected_profile_name'] : null ) ;
+		return ( isset ( $_SESSION['user_type'] ) ? $_SESSION['user_type'] : null ) ;
 	}
 
 	public static function setUserSession ( $user_data ) {
@@ -49,11 +49,11 @@ class UserSessionMdl {
 		if ( is_null ( $user_data ) || ! is_array( $user_data ) ) {
 			return false;
 		}
-		// $_SESSION['user_uuid'] = $user_data['user_uuid'];
-		// $_SESSION['user_name'] =  $user_data['user_name'];
-		// $_SESSION['user_surname'] = $user_data['user_surname'];
-		// $_SESSION['user_type_id'] = $user_data['user_type_id'];
-		// $_SESSION['user_type_id'] = $user_data['user_type_id'];
+		$_SESSION['user_uuid'] = $user_data['uuid'];
+		$_SESSION['user_name'] =  $user_data['user_name'];
+		$_SESSION['user_surname'] = $user_data['user_surname'];
+		$_SESSION['user_type_id'] = $user_data['user_type_id'];
+		$_SESSION['user_type'] = $user_data['user_type'];
 		return true;
 	}
 

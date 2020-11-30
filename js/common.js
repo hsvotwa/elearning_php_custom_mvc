@@ -32,6 +32,11 @@ var httpHandler = function(http_url, _type, _model, callBack, extra, showError, 
                                 callBack(response);
                             }
                             toastr.success(response.message, "Success");
+                            if (typeof response.redirect_to !== 'undefined' && response.redirect_to !== '') {
+                                return setTimeout(function() {
+                                    window.location = response.redirect_to
+                                }, 2000);
+                            }
                             return;
                         } else if (typeof(message_field) !== "undefined") {
                             $("#" + message_field).html(response.message);

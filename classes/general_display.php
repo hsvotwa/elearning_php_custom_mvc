@@ -64,6 +64,11 @@ class GeneralDisplay {
                 $nav_echo .= '<a href="' . APP_DOMAIN . $row['controller'] . '/' . $row["action"] . '">' . $row['name'] . '</a>';
             }
         }
+        if( new UserMdl( UserSessionMdl::getUuid() ) ) {
+            $nav_echo .= '<a href="account/logout">Log out</a>'; 
+        } else {
+            $nav_echo .= '<a href="account/login">Log in</a>'; 
+        }
         $nav_echo .= '</div>';
         return $nav_echo;
     }

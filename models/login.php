@@ -12,7 +12,10 @@ class LoginMdl extends BaseMdl {
 
     public function auth( $email, $password, &$redirect_to ) {
         $redirect_to = "";
-        $query = "select * from tbl_user where email = '$email' and password = '" . md5( $password ) . "';";
+        $query = "select u.*, ut.name as user_type 
+                    from tbl_user u 
+                    inner join tbl_lu_user_type ut on ut.enum_id = u.user_type_id 
+                    where email = '$email' and password = '" . md5( $password ) . "';";
         $records = $this->getMySql()->getQueryResult( $query );
         if( ! $records || ! $records->num_rows ) {
             $redirect_to = WEBROOT . "account/login";

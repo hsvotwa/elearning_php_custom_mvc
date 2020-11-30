@@ -8,7 +8,7 @@ if( ! $records || ! $records->num_rows ) {
     <?php
     $count = 0;
     $action = $can_edit ? "edit" : "detail";
-    echo '<tr><td colspan="2"><h3>Selected Study Aids</h3></td></tr>';
+    echo '<tr><h3>Selected Study Aids</h3></td></tr>';
     foreach ( $records as $record ) {
         if( $count % 2 == 0 ) {
             if( $count > 0 ) {

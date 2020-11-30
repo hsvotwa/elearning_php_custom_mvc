@@ -15,9 +15,11 @@
     }
 
     final class EnumStudentStatus {
-        const applied = 0;
-        const active = 1;
-        const inactive = 2;
+        const draft = 0;
+        const applied = 1;
+        const active = 2;
+        const inactive = 3;
+        const declined = 4;
     }
 
     final class EnumPaymentTerm {
@@ -63,6 +65,7 @@
         const tbl_student_subject = "tbl_student_subject";
         const tbl_student_aid = "tbl_student_aid";
         const tbl_lu_payment_term = "tbl_lu_payment_term";
+        const tbl_lu_student_status = "tbl_lu_student_status";
     }
 
     final class EnumMySqlColType {

@@ -4,7 +4,7 @@ class studentController extends BaseController {
     }
 
     function create() {
-        if( ! ( new UserMdl() )->hasAccessTo( EnumUserRoleType::manage_student ) ) {
+        if( ! ( new UserMdl() )->hasAccessTo( EnumUserRoleType::none ) ) {
             ( new ErrorController() )->Error403();
             return;
         }
@@ -20,7 +20,7 @@ class studentController extends BaseController {
             ( new ErrorController() )->Error403();
             return;
         }
-        if( ! ( new UserMdl() )->hasAccessTo( EnumUserRoleType::manage_student ) ) {
+        if( ! ( new UserMdl() )->hasAccessTo( EnumUserRoleType::none ) ) {
             $this->detail( $id );
             return;
         }
@@ -52,7 +52,7 @@ class studentController extends BaseController {
     }
 
     function save() {
-        if( ! ( new UserMdl() )->hasAccessTo( EnumUserRoleType::manage_student ) ) {
+        if( ! ( new UserMdl() )->hasAccessTo( EnumUserRoleType::none ) ) {
             echo ( new GeneralDisplay() )->deterFeedback( false, "", UNAUTHORISED_MESSAGE );
             return;
         }
@@ -78,7 +78,7 @@ class studentController extends BaseController {
     }
 
     function createdocument() {
-        if( ! ( new UserMdl() )->hasAccessTo( EnumUserRoleType::manage_student ) ) {
+        if( ! ( new UserMdl() )->hasAccessTo( EnumUserRoleType::none ) ) {
             echo ( new GeneralDisplay() )->deterFeedback( false, "", UNAUTHORISED_MESSAGE );
             return;
         }
@@ -91,7 +91,7 @@ class studentController extends BaseController {
     }
 
     function savedocument() {
-        if( ! ( new UserMdl() )->hasAccessTo( EnumUserRoleType::manage_student ) ) {
+        if( ! ( new UserMdl() )->hasAccessTo( EnumUserRoleType::none ) ) {
             echo ( new GeneralDisplay() )->deterFeedback( false, "", UNAUTHORISED_MESSAGE );
             return;
         }
@@ -103,7 +103,7 @@ class studentController extends BaseController {
     }
 
     function removedocument() {
-        if( ! ( new UserMdl() )->hasAccessTo( EnumUserRoleType::manage_student ) ) {
+        if( ! ( new UserMdl() )->hasAccessTo( EnumUserRoleType::none ) ) {
             echo ( new GeneralDisplay() )->deterFeedback( false, "", UNAUTHORISED_MESSAGE );
             return;
         }

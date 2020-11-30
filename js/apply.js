@@ -13,11 +13,18 @@ $(function() {
             $(element).removeClass("input-validation-error");
         }
     });
-    $("#frm_main").on("submit", function(e) {
+    $("#btn_save").on("click", function(e) {
         e.preventDefault();
         formValidate(validator);
         if ($("#frm_main").valid()) {
             httpHandler("/" + getBaseUrl() + "student/saveapplication", "post", $("#frm_main").serialize(), doUIUpdateMain, undefined, undefined, undefined, 'error_label');
+        }
+    });
+    $("#btn_submit").on("click", function(e) {
+        e.preventDefault();
+        formValidate(validator);
+        if ($("#frm_main").valid()) {
+            httpHandler("/" + getBaseUrl() + "student/submitapplication", "post", $("#frm_main").serialize(), doUIUpdateMain, undefined, undefined, undefined, 'error_label');
         }
     });
 });
@@ -74,6 +81,7 @@ function loadSubjects() {
     httpHandler("/" + getBaseUrl() + "student/getsubjects/" + $("#uuid").val() + "/", "get", null,
         function(html) {
             $("#subject_list").html(html);
+            loadStatement();
             doUIUpdateSubjects(true);
         }, null, false);
 }
@@ -107,7 +115,16 @@ function loadAids() {
     httpHandler("/" + getBaseUrl() + "student/getaids/" + $("#uuid").val() + "/", "get", null,
         function(html) {
             doUIUpdateAids(true);
+            loadStatement();
             $("#aid_list").html(html);
+        }, null, false);
+}
+
+function loadStatement() {
+    httpHandler("/" + getBaseUrl() + "student/getstatement/" + $("#uuid").val() + "/", "get", null,
+        function(html) {
+            $("#tab-quotation").html(html);
+            doUIUpdateSubjects(true);
         }, null, false);
 }
 

@@ -79,17 +79,16 @@
                         </table>
                     </div>
                     <div id="tab-quotation" style="display:none;">
-                        <div id="quotation_breakdown"></div>
                     </div>
                 </div>
             </td>
         </tr>
         <tr>
             <td class="w-50">
-                <input type="submit" value="Save" class="button" />
+                <input id="btn_save" type="submit" value="Save" class="button" />
             </td>
             <td class="w-50">
-                <input type="submit" value="Submit application" class="button" formaction="<?php APP_DOMAIN . "student/submitapplication"; ?>" />
+                <input id="btn_submit" type="button" value="Submit application" class="button bg_green" />
             </td>
         </tr>
     </table>

@@ -60,13 +60,11 @@ function handleAllNavigation ( $delete_existing = true ) {
   $sequence = 0;
   $return = true;
   $return && $return = handleNavigation( 'Students', 'students', 'manage', ++$sequence, EnumUserRoleType::admin, $uuid );
-  $return && $return = handleNavigation( 'Users', 'users', 'manage', ++ $sequence, EnumUserRoleType::admin, $uuid );
+  $return && $return = handleNavigation( 'News updates', 'news', 'manage', ++ $sequence, EnumUserRoleType::admin, $uuid );
   $return && $return = handleNavigation( 'Subjects', 'subjects', 'manage', ++$sequence, EnumUserRoleType::none, $uuid );
   $return && $return = handleNavigation( 'Study Aids', 'aids', 'manage', ++$sequence, EnumUserRoleType::none, $uuid );
-  $return && $return = handleNavigation( 'Apply', 'student', 'apply', ++$sequence, EnumUserRoleType::none, $uuid );
-  $return && $return = handleNavigation( 'Statement', 'statement', 'detail', ++$sequence, EnumUserRoleType::authenticated_user, $uuid );
-  $return && $return = handleNavigation ( 'Log out', 'account', 'logout', ++$sequence, EnumUserRoleType::authenticated_user, $uuid );
-  $return && $return = handleNavigation ( 'Log in', 'account', 'login', ++$sequence, EnumUserRoleType::none, $uuid );
+  $return && $return = handleNavigation( 'Apply', 'student', 'apply', ++$sequence, EnumUserRoleType::guest, $uuid );
+  $return && $return = handleNavigation( 'Statement', 'student', 'feesbreakdown', ++$sequence, EnumUserRoleType::student, $uuid );
   return $return;
 }
 
@@ -83,6 +81,12 @@ function handleAllLookupData() {
   handleLookupData ( $table, EnumPaymentTerm::one_year, '1 year');
   handleLookupData ( $table, EnumPaymentTerm::two_years, '2 years');
   handleLookupData ( $table, EnumPaymentTerm::three_years, '3 years');
+  $table = EnumSqlTbl::tbl_lu_student_status;
+  handleLookupData ( $table, EnumStudentStatus::draft, 'Draft');
+  handleLookupData ( $table, EnumStudentStatus::applied, 'Applied');
+  handleLookupData ( $table, EnumStudentStatus::active, 'Active');
+  handleLookupData ( $table, EnumStudentStatus::inactive, 'Inactive');
+  handleLookupData ( $table, EnumStudentStatus::declined, 'Declined');
   //Subjects
   $table = EnumSqlTbl::tbl_subject;
   $enum_val = 1;
@@ -328,6 +332,13 @@ function handleAllTableStructure() {
     echo "Could not create/alter table: {$db_tbl->getName()} </br>";
     $return = false;
   }
+  $db_tbl = ( new MySqlTable( EnumSqlTbl::tbl_lu_student_status ) )
+                  ->addColumn( /*$name = */'enum_id', EnumMySqlColType::_int, /*$len = */11, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::primary, /*$auto_increment =*/false )
+                  ->addColumn( /*$name = */'name', EnumMySqlColType::varchar, /*$len = */50, /*$def = */null, /*$allow_null = */false );
+  if ( ! $db_tbl->handle() ) {
+    echo "Could not create/alter table: {$db_tbl->getName()} </br>";
+    $return = false;
+  }
   $db_tbl = ( new MySqlTable( EnumSqlTbl::tbl_lu_payment_term ) )
                   ->addColumn( /*$name = */'enum_id', EnumMySqlColType::_int, /*$len = */11, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::primary, /*$auto_increment =*/false )
                   ->addColumn( /*$name = */'name', EnumMySqlColType::varchar, /*$len = */50, /*$def = */null, /*$allow_null = */false );
@@ -416,6 +427,7 @@ function handleAllTableStructure() {
                 ->addColumn( /*$name = */'email', EnumMySqlColType::varchar, /*$len = */200, /*$def = */null, /*$allow_null = */true )
                 ->addColumn( /*$name = */'name', EnumMySqlColType::varchar, /*$len = */200, /*$def = */null, /*$allow_null = */true )
                 ->addColumn( /*$name = */'surname', EnumMySqlColType::varchar, /*$len = */200, /*$def = */null, /*$allow_null = */true )
+                ->addColumn( /*$name = */'password', EnumMySqlColType::varchar, /*$len = */200, /*$def = */null, /*$allow_null = */true )
                 ->addColumn( /*$name = */'status_id', EnumMySqlColType::tinyint, /*$len = */4, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::index )
                 ->addColumn( /*$name = */'user_type_id', EnumMySqlColType::tinyint, /*$len = */4, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::index )
                 ->addColumn( /*$name = */'created', EnumMySqlColType::date_time )

@@ -14,5 +14,14 @@ class UserMgr extends BaseMgr {
                 and upa.soft_del = " . EnumYesNo::no . "
                 order by surname";
     }
+
+    public static function createPassword ( $password_length = 10 ) {
+        $return = '';
+        $chars = '234567890abcdefghijkmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        for ( $char_count = 1; $char_count <= $password_length; $char_count++ ) {
+            $return .= $chars { mt_rand( 0, strlen ( $chars ) ) };
+        }
+        return $return;
+    }
 }
 ?>

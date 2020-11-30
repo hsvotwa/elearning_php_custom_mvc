@@ -34,10 +34,10 @@ if ( Common::isLiveServer() ) {
 //SMTP
 define ( 'SMTP_DEBUG', false );
 define ( 'SMTP_AUTH', true );
-define ( 'SMTP_SECURE', 'tls' );
-define ( 'SMTP_HOST', 'email-smtp.eu-central-1.amazonaws.com' );
+define ( 'SMTP_SECURE', '' );
+define ( 'SMTP_HOST', 'mail.geekabyteworld.com' );
 define ( 'SMTP_PORT', 587 ); // or 25 or 487
-define ( 'SMTP_USERNAME', 'AKIAWH6LSIFUJG33MUG2' );
-define ( 'SMTP_PASSWORD', 'BGM370NTPyAVp/q9E0Dy/9qn+2GJpxMvhbDzqm4jeLPJ' );
-define ( 'SMTP_FROM_ADDRESS', 'no-reply@bcity.medsd' );
+define ( 'SMTP_USERNAME', 'fbstest@myguestsonline.com' );
+define ( 'SMTP_PASSWORD', 'Password123' );
+define ( 'SMTP_FROM_ADDRESS', 'fbstest@myguestsonline.com' );
 ?>

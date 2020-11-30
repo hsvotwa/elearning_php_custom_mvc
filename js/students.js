@@ -24,3 +24,21 @@ function refresh() {
             $("#refresh_link").removeClass('url_orange');
         }, null, false);
 }
+
+function approve(student_uuid) {
+    confirmDialog("approve", "Confirm", "Are you sure you want to approve this student's application?", function() {
+        var data = {
+            student_uuid: student_uuid
+        };
+        httpHandler("/" + getBaseUrl() + "student/approveapplication", "post", data, refresh);
+    });
+}
+
+function decline(student_uuid) {
+    confirmDialog("decline", "Confirm", "Are you sure you want to decline this student's application?", function() {
+        var data = {
+            student_uuid: student_uuid
+        };
+        httpHandler("/" + getBaseUrl() + "student/declineapplication", "post", data, refresh);
+    });
+}
