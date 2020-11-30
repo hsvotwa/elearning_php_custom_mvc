@@ -2,7 +2,6 @@
 define( 'APP_NAME', 'Trustco Educations' );
 define ( 'APP_SHORT_NAME', 'Trustco Educations' );
 define ( 'APP_DIR', '' );
-define ( 'IMAGE_UPLOAD_DIR', 'uploads/' );
 define ( 'DATETIME_MYSQL_FORMAT', 'Y-m-d H:i:s' );
 define ( 'DATE_MYSQL_FORMAT', 'Y-m-d' );
 define ( 'DATE_SEC_IN_DAY', 86400 );
@@ -14,10 +13,11 @@ define ( 'FIELD_INVALID_STYLE', 'border: 1px solid red;' );
 define ( 'COMPANY_NAME', 'Trustco Educations' );
 define ( 'EXCEPTION_MESSAGE', 'An error has occurred. Please retry.' );
 define ( 'UNAUTHORISED_MESSAGE', 'You\'re not authorised to perform this function.' );
-define ( 'INDEX_PAGE', 'index.php' );
-define ( 'AJAX_PAGE', 'index_req.php' );
+
+//Settings section
 define ( 'CURRENCY_SYMBOL', 'N$' );
 
+//Database section
 if ( Common::isLiveServer() ) {
 	define ( 'MYSQL_HOST', 'localhost' );
 	define ( 'MYSQL_USR', 'root' );
@@ -31,7 +31,7 @@ if ( Common::isLiveServer() ) {
     define ( 'MYSQL_DB', 'trustco1' );
 	define('APP_DOMAIN', 'http://localhost/trustco1/');
 }
-//SMTP
+//SMTP section
 define ( 'SMTP_DEBUG', false );
 define ( 'SMTP_AUTH', true );
 define ( 'SMTP_SECURE', '' );

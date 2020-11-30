@@ -14,10 +14,6 @@ class SubjectsController extends BaseController {
     }
 
     function list( $search_text = "" ) {
-        if( ! ( new UserMdl() )->hasAccessTo( EnumUserRoleType::none ) ) {
-            echo ( new GeneralDisplay() )->deterFeedback( false, "", UNAUTHORISED_MESSAGE );
-            return;
-        }
         $this->g_can_edit = ( new UserMdl() )->hasAccessTo( EnumUserRoleType::none );
         $model = new SubjectMgr( $search_text );
         $this->g_layout = null;
