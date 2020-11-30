@@ -21,6 +21,13 @@ class UserSessionMdl {
 		return ( isset ( $_SESSION['user_surname'] ) ? $_SESSION['user_surname'] : null ) ;
 	}
 
+	public static function getStudentUuid() {
+		if ( session_status() == PHP_SESSION_NONE ) {
+			session_start();
+		}
+		return ( isset ( $_SESSION['student_uuid'] ) ? $_SESSION['student_uuid'] : null ) ;
+	}
+
 	public static function getFullName() {
 		if ( session_status() == PHP_SESSION_NONE ) {
 			session_start();
@@ -53,6 +60,7 @@ class UserSessionMdl {
 		$_SESSION['user_name'] =  $user_data['user_name'];
 		$_SESSION['user_surname'] = $user_data['user_surname'];
 		$_SESSION['user_type_id'] = $user_data['user_type_id'];
+		$_SESSION['student_uuid'] = $user_data['student_uuid'];
 		$_SESSION['user_type'] = $user_data['user_type'];
 		return true;
 	}

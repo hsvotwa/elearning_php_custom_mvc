@@ -12,10 +12,16 @@ class LoginMdl extends BaseMdl {
 
     public function auth( $email, $password, &$redirect_to ) {
         $redirect_to = "";
-        $query = "select u.*, ut.name as user_type 
+        $query = "select u.uuid, 
+                        ifnull(s.name, u.name) as name,
+                        u.surname,
+                        u.user_type_id,
+                        u.student_uuid,
+                        ut.name as user_type 
                     from tbl_user u 
                     inner join tbl_lu_user_type ut on ut.enum_id = u.user_type_id 
-                    where email = '$email' and password = '" . md5( $password ) . "';";
+                    left join tbl_student s on s.uuid = u.student_uuid
+                    where u.email = '$email' and u.password = '" . md5( $password ) . "';";
         $records = $this->getMySql()->getQueryResult( $query );
         if( ! $records || ! $records->num_rows ) {
             $redirect_to = WEBROOT . "account/login";
@@ -32,6 +38,7 @@ class LoginMdl extends BaseMdl {
                 "user_name" => $user_data["name"], 
                 "user_surname" => $user_data["surname"], 
                 "user_type_id" => $user_data["user_type_id"], 
+                "student_uuid" => $user_data["student_uuid"], 
                 "user_type" =>  $user_data["user_type"]
                 )
             );

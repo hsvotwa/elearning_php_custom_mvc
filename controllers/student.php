@@ -140,13 +140,13 @@ class studentController extends BaseController {
         $this->render("confirmapplication");
     }
 
-    function feesbreakdown( $student_uuid ) {
+    function feesbreakdown() {
         if( ! ( new UserMdl() )->hasAccessTo( EnumUserRoleType::none ) ) {
             echo ( new GeneralDisplay() )->deterFeedback( false, "", UNAUTHORISED_MESSAGE );
             return;
         }
         $this->g_can_edit = true;
-        $model = new StudentMdl( $student_uuid );
+        $model = new StudentMdl( UserSessionMdl::getStudentUuid() );
         $error_message = "";
         $this->g_records = $model->getQuotation();
         $this->render("feesbreakdown");

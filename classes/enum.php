@@ -66,6 +66,7 @@
         const tbl_student_aid = "tbl_student_aid";
         const tbl_lu_payment_term = "tbl_lu_payment_term";
         const tbl_lu_student_status = "tbl_lu_student_status";
+        const tbl_ebook = "tbl_ebook";
     }
 
     final class EnumMySqlColType {

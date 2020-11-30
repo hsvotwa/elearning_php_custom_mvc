@@ -65,6 +65,7 @@ function handleAllNavigation ( $delete_existing = true ) {
   $return && $return = handleNavigation( 'Study Aids', 'aids', 'manage', ++$sequence, EnumUserRoleType::none, $uuid );
   $return && $return = handleNavigation( 'Apply', 'student', 'apply', ++$sequence, EnumUserRoleType::guest, $uuid );
   $return && $return = handleNavigation( 'Statement', 'student', 'feesbreakdown', ++$sequence, EnumUserRoleType::student, $uuid );
+  $return && $return = handleNavigation( 'eBooks', 'books', 'manage', ++$sequence, EnumUserRoleType::student, $uuid );
   return $return;
 }
 
@@ -290,6 +291,65 @@ function handleAllLookupData() {
               last_modified = now()
             where id = '" . $study_aid["id"] . ";" ;
   }
+  //eBooks
+  $table = EnumSqlTbl::tbl_ebook;
+  $enum_val = 1;
+  $ebooks = [
+    array(
+      "id" => $enum_val ++,
+      "name" => "Data Structures: A complete guide",
+      "file_name" => "ebook1.pdf",
+      "image_name" => "dsa001.png"
+    ),
+    array(
+      "id" => $enum_val ++,
+      "name" => "Magic with Daiscrete Maths",
+      "file_name" => "ebook2.pdf",
+      "image_name" => "dma001.png"
+    ),
+    array(
+      "id" => $enum_val ++,
+      "name" => "The Ultimate Data Structures",
+      "file_name" => "ebook3.pdf",
+      "image_name" => "wdf001.png"
+    ),
+    array(
+      "id" => $enum_val ++,
+      "name" => "Code refactoring: A practical approach",
+      "file_name" => "ebook4.pdf",
+      "image_name" => "dsa001.png"
+    ),
+    array(
+      "id" => $enum_val ++,
+      "name" => "Master Discrete Mathematics in 21 days",
+      "file_name" => "ebook5.pdf",
+      "image_name" => "dma001.png"
+    )
+  ];
+  foreach( $ebooks as $ebook ) {
+    $qry = "select *
+              from {$table}
+              where ( id = '" . $ebook["id"] . "' );";
+    $result = $mysql->getQueryResult ( $qry );
+    if ( ! $result || ! $mysql->getQueryResult ( $qry )->num_rows ) {
+        $qry = "insert into {$table}
+                  set id = '" . $ebook["id"] . "',
+                  file_name = '" . $ebook["file_name"] . "',
+                  name = '" . $ebook["name"] . "',
+                  image_name = '" . $ebook["image_name"] . "',
+                  created = now(),
+                  last_modified = now(); ";
+        $mysql->getQueryResult ( $qry );
+        continue;
+    }
+    $qry = "update {$table}
+              set id = '" . $ebook["id"] . "',
+              file_name = '" . $ebook["file_name"] . "',
+              name = '" . $ebook["name"] . "',
+              image_name = '" . $ebook["image_name"] . "',
+              last_modified = now()
+            where id = '" . $ebook["id"] . ";" ;
+  }
   $queries[] = $qry;
   return $mysql->getQueryResult ( $queries );
 }
@@ -352,6 +412,17 @@ function handleAllTableStructure() {
                   ->addColumn( /*$name = */'code', EnumMySqlColType::varchar, /*$len = */50, /*$def = */null, /*$allow_null = */false )
                   ->addColumn( /*$name = */'image_name', EnumMySqlColType::varchar, /*$len = */100, /*$def = */null, /*$allow_null = */false )
                   ->addColumn( /*$name = */'cost', EnumMySqlColType::decimal, /*$len = */"18,2", /*$def = */0, /*$allow_null = */false )
+                  ->addColumn( /*$name = */'created', EnumMySqlColType::date_time )
+                  ->addColumn( /*$name = */'last_modified', EnumMySqlColType::date_time );
+  if ( ! $db_tbl->handle() ) {
+    echo "Could not create/alter table: {$db_tbl->getName()} </br>";
+    $return = false;
+  }
+  $db_tbl = ( new MySqlTable( EnumSqlTbl::tbl_ebook ) )
+                  ->addColumn( /*$name = */'id', EnumMySqlColType::_int, /*$len = */11, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::primary, /*$auto_increment =*/false )
+                  ->addColumn( /*$name = */'name', EnumMySqlColType::varchar, /*$len = */50, /*$def = */null, /*$allow_null = */false )
+                  ->addColumn( /*$name = */'file_name', EnumMySqlColType::varchar, /*$len = */50, /*$def = */null, /*$allow_null = */false )
+                  ->addColumn( /*$name = */'image_name', EnumMySqlColType::varchar, /*$len = */100, /*$def = */null, /*$allow_null = */false )
                   ->addColumn( /*$name = */'created', EnumMySqlColType::date_time )
                   ->addColumn( /*$name = */'last_modified', EnumMySqlColType::date_time );
   if ( ! $db_tbl->handle() ) {
