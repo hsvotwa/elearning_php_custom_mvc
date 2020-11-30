@@ -11,12 +11,12 @@
 </head>
 <body>
     <header class="nav-hd-main">
-        <a href="#" class="url_app_title"><?php echo $app_name ?></a>
+        <a href="<?php echo WEBROOT; ?>home/welcome" class="url_app_title"><?php echo $app_name ?></a>
         <?php 
             echo $navigation 
         ?>
         <div class="div_hd_corner">
-            <font class="font_h3"><a class="profile_name" href="<?php echo WEBROOT; ?>profiles/manage"><?php echo $selected_profile ?></a></font>
+            <font class="font_h3"><a class="profile_name" href="#"><?php echo $selected_profile ?></a></font>
             <font class="font_white" style="font-size:12px">&nbsp;&#8226;</font>
             <font class="font_white">&nbsp;<?php echo $user_detail ?></font>
             <div style="float-right">

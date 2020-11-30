@@ -82,8 +82,11 @@ class StudentMdl extends BaseMdl {
         }
         $return["total_cost"] = $total_cost;
         $return["interest_percent"] = $this->getInterestRate(  $this->g_row["payment_term_id"] );
-        $return["interest_amount"] = $total_cost * ( 100 + $return["interest_percent"] ) / 100;
+        $return["interest_amount"] = $total_cost * ( $return["interest_percent"] / 100 );
         $return["total_due"] = $total_cost + $return["interest_amount"];
+        $return["period"] = $this->g_row["payment_term_id"] . ( 
+            $this->g_row["payment_term_id"] > 1 ? " years" : " year"   
+        );
         $return["monthly_payment"] =  ! $this->g_row["payment_term_id"] ? 0 : $return["total_due"] / ( $this->g_row["payment_term_id"] * 12 ); //Avpid divide by zero exception
         return $return;
     }

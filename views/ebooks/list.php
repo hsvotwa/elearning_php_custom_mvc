@@ -20,7 +20,7 @@ if( ! $records || ! $records->num_rows ) {
 
         echo "<table width=\"25%\">";
         echo "<tr>";
-        echo '<td><img src="' .  APP_DOMAIN . "images/" . $record['image_name'] . '" width=200></td>';
+        echo '<td><img src="' .  APP_DOMAIN . "images/" . $record['image_name'] . '" width=300></td>';
         echo "</tr>";
         
         echo "<tr>";

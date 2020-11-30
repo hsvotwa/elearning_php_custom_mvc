@@ -5,7 +5,7 @@
                 <input type="search" name="search" id="search" class="text" placeholder="Search subject(s)..." />&nbsp;
                 <a href="#" class="url" id="refresh_link">refresh</a>
             </div>
-            <table class="tbl_cont_data tbl_cont_data_filter" id="record_list">
+            <table class="tbl_cont_data tbl_cont_data_filter" style="width:99%" id="record_list">
 
             </table>
         </td>

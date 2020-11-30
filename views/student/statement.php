@@ -20,7 +20,7 @@ if( ! $records ) {
         echo "</tr>";
         
         echo "<tr>";
-        echo '<td style="text-align:center">Interest percentage cost: <b>' . Convert::toNum( $records['interest_percent'] ) . '</b></td>';
+        echo '<td style="text-align:center">Interest percentage: <b>' . Convert::toNum( $records['interest_percent'] ) . '%</b></td>';
         echo "</tr>";
         
         echo "<tr>";
@@ -29,6 +29,10 @@ if( ! $records ) {
         
         echo "<tr>";
         echo '<td style="text-align:center">Total due: <b>$ ' . Convert::toNum( $records['total_due'] ) . '</b></td>';
+        echo "</tr>";
+        
+        echo "<tr>";
+        echo '<td style="text-align:center">Payment period: <b>' . $records['period'] . '</b></td>';
         echo "</tr>";
         
         echo "<tr>";

@@ -65,7 +65,7 @@ function handleAllNavigation ( $delete_existing = true ) {
   $return && $return = handleNavigation( 'Study Aids', 'aids', 'manage', ++$sequence, EnumUserRoleType::none, $uuid );
   $return && $return = handleNavigation( 'Apply', 'student', 'apply', ++$sequence, EnumUserRoleType::guest, $uuid );
   $return && $return = handleNavigation( 'Statement', 'student', 'feesbreakdown', ++$sequence, EnumUserRoleType::student, $uuid );
-  $return && $return = handleNavigation( 'eBooks', 'books', 'manage', ++$sequence, EnumUserRoleType::student, $uuid );
+  $return && $return = handleNavigation( 'eBooks', 'ebooks', 'manage', ++$sequence, EnumUserRoleType::student, $uuid );
   return $return;
 }
 
@@ -305,7 +305,7 @@ function handleAllLookupData() {
       "id" => $enum_val ++,
       "name" => "Magic with Daiscrete Maths",
       "file_name" => "ebook2.pdf",
-      "image_name" => "dma001.png"
+      "image_name" => "dma001.jpg"
     ),
     array(
       "id" => $enum_val ++,
@@ -323,7 +323,7 @@ function handleAllLookupData() {
       "id" => $enum_val ++,
       "name" => "Master Discrete Mathematics in 21 days",
       "file_name" => "ebook5.pdf",
-      "image_name" => "dma001.png"
+      "image_name" => "dma001.jpg"
     )
   ];
   foreach( $ebooks as $ebook ) {
